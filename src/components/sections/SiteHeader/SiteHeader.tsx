@@ -61,15 +61,6 @@ export function SiteHeader({ cartCount, sticky = true }: SiteHeaderProps) {
 
   return (
     <>
-      {/* Franja legal: el Botón de arrepentimiento tiene que verse en la
-          primera pantalla (Res. 424/2020). No es sticky: se va al scrollear. */}
-      <div className={styles.utilityBar}>
-        <div className={styles.utilityInner}>
-          <Link to={ROUTES.withdrawal} className={styles.utilityLink}>
-            {text.nav.withdrawal}
-          </Link>
-        </div>
-      </div>
       <header
         className={[styles.header, sticky ? styles.sticky : '', isHidden ? styles.hidden : '']
           .filter(Boolean)

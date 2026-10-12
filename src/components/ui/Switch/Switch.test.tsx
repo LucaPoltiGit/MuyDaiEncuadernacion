@@ -12,9 +12,7 @@ describe('Switch', () => {
   });
 
   it('se anuncia como interruptor con su estado y detalle', () => {
-    render(
-      <Switch label="Texto en la tapa" detail="+ $ 2.500" checked onChange={() => {}} />,
-    );
+    render(<Switch label="Texto en la tapa" detail="+ $ 2.500" checked onChange={() => {}} />);
     const toggle = screen.getByRole('switch', { name: 'Texto en la tapa' });
     expect(toggle).toBeChecked();
     expect(toggle).toHaveAccessibleDescription('+ $ 2.500');

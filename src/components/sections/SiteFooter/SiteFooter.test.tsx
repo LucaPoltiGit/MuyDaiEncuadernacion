@@ -17,7 +17,7 @@ describe('SiteFooter', () => {
     );
     expect(within(help).getByRole('link', { name: text.shippingPolicy })).toHaveAttribute(
       'href',
-      '/envios-y-devoluciones',
+      '/envios',
     );
     expect(within(help).getByRole('link', { name: text.terms })).toHaveAttribute(
       'href',
@@ -25,11 +25,11 @@ describe('SiteFooter', () => {
     );
   });
 
-  it('tiene el Botón de arrepentimiento', () => {
+  it('invita a escribir por WhatsApp para pedidos especiales', () => {
     renderWithRouter(<SiteFooter />);
-    expect(screen.getByRole('link', { name: text.withdrawalButton })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: text.contactButton })).toHaveAttribute(
       'href',
-      '/boton-de-arrepentimiento',
+      expect.stringContaining('https://wa.me/'),
     );
   });
 
@@ -38,7 +38,6 @@ describe('SiteFooter', () => {
     const instagram = screen.getByRole('link', { name: text.instagram });
     expect(instagram).toHaveAttribute('href', SOCIAL_LINKS.instagram);
     expect(instagram).toHaveAttribute('target', '_blank');
-    expect(screen.getByRole('link', { name: text.facebook })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: text.whatsapp })).toBeInTheDocument();
   });
 });

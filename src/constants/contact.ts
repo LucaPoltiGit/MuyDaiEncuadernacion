@@ -8,7 +8,6 @@ export const WHATSAPP_NUMBER = '5491100000000';
 
 export const SOCIAL_LINKS = {
   instagram: 'https://www.instagram.com/muydai',
-  facebook: 'https://www.facebook.com/muydai',
 } as const;
 
 /** Sitio oficial de Defensa de las y los Consumidores (Argentina). */

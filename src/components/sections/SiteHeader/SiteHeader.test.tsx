@@ -17,14 +17,6 @@ describe('SiteHeader', () => {
     expect(screen.getByRole('link', { name: text.brandName })).toHaveAttribute('href', '/');
   });
 
-  it('muestra el Botón de arrepentimiento en la primera pantalla', () => {
-    renderWithRouter(<SiteHeader />);
-    expect(screen.getByRole('link', { name: text.nav.withdrawal })).toHaveAttribute(
-      'href',
-      '/boton-de-arrepentimiento',
-    );
-  });
-
   it('abre y cierra el menú con el botón', async () => {
     renderWithRouter(<SiteHeader />);
     const toggle = getMenuToggle();

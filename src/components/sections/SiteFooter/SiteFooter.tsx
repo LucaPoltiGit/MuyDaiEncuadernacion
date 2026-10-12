@@ -15,7 +15,6 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
   const social = [
     { href: SOCIAL_LINKS.instagram, label: text.footer.instagram, icon: 'instagram' as const },
-    { href: SOCIAL_LINKS.facebook, label: text.footer.facebook, icon: 'facebook' as const },
     {
       href: whatsappLink(text.whatsapp.message),
       label: text.footer.whatsapp,
@@ -67,14 +66,16 @@ export function SiteFooter() {
           </nav>
 
           <div className={styles.column}>
-            <h2 className={styles.columnTitle}>{text.footer.withdrawalTitle}</h2>
-            <p className={styles.muted}>{text.footer.withdrawalText}</p>
-            <Link
-              to={ROUTES.withdrawal}
-              className={buttonClassName({ variant: 'inverse', className: styles.withdrawal })}
+            <h2 className={styles.columnTitle}>{text.footer.contactTitle}</h2>
+            <p className={styles.muted}>{text.footer.contactText}</p>
+            <a
+              href={whatsappLink(text.whatsapp.message)}
+              target="_blank"
+              rel="noreferrer"
+              className={buttonClassName({ variant: 'inverse', className: styles.contact })}
             >
-              {text.footer.withdrawalButton}
-            </Link>
+              {text.footer.contactButton}
+            </a>
           </div>
         </div>
 

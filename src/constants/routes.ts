@@ -18,8 +18,7 @@ export const ROUTES = {
   account: '/mi-cuenta',
   admin: '/admin',
   terms: '/terminos-y-condiciones',
-  shippingPolicy: '/envios-y-devoluciones',
-  withdrawal: '/boton-de-arrepentimiento',
+  shippingPolicy: '/envios',
   styleGuide: '/guia-de-estilo',
 } as const;
 

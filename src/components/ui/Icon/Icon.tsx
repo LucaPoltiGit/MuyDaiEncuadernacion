@@ -36,12 +36,9 @@ const paths: Record<IconName, ReactNode> = {
       <circle cx="17.2" cy="6.8" r="0.6" />
     </>
   ),
-  facebook: (
-    <path d="M14 8.5h2.5V5H14a3.5 3.5 0 0 0-3.5 3.5V11H8v3.5h2.5V21H14v-6.5h2.5L17 11h-3V9a.5.5 0 0 1 .5-.5z" />
-  ),
 };
 
-export type IconName = 'menu' | 'close' | 'cart' | 'user' | 'whatsapp' | 'instagram' | 'facebook';
+export type IconName = 'menu' | 'close' | 'cart' | 'user' | 'whatsapp' | 'instagram';
 
 export interface IconProps {
   name: IconName;
