@@ -1,0 +1,65 @@
+.flower {
+  display: inline-block;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.xs {
+  width: var(--flower-size-xs);
+  height: var(--flower-size-xs);
+}
+
+.sm {
+  width: var(--flower-size-sm);
+  height: var(--flower-size-sm);
+}
+
+.md {
+  width: var(--flower-size-md);
+  height: var(--flower-size-md);
+}
+
+.lg {
+  width: var(--flower-size-lg);
+  height: var(--flower-size-lg);
+}
+
+.xl {
+  width: var(--flower-size-xl);
+  height: var(--flower-size-xl);
+}
+
+.petal {
+  fill: var(--color-flower-petal);
+}
+
+.stitch {
+  fill: none;
+  stroke: var(--color-flower-stitch);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-dasharray: 5 6;
+  opacity: 0.85;
+}
+
+.center {
+  fill: var(--color-flower-center);
+}
+
+.shine {
+  fill: var(--color-paper-50);
+  opacity: 0.75;
+}
+
+/* Tono suave para decorar fondos sin parecer un botón. */
+.soft .petal {
+  fill: var(--color-action-soft);
+}
+
+.soft .stitch {
+  stroke: var(--color-flower-petal);
+}
+
+.soft .center {
+  fill: var(--color-accent-soft);
+}

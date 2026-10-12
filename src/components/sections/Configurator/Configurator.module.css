@@ -1,0 +1,205 @@
+.configurator {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-6) var(--space-4) var(--space-12);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-link);
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+}
+
+.lead {
+  color: var(--color-text-muted);
+}
+
+/* Mobile: una sola columna. La columna de la vista previa "se disuelve"
+   (display: contents) para ordenar sus partes: vista previa arriba,
+   opciones, y al final el detalle de precio y guardar. */
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.previewColumn {
+  display: contents;
+}
+
+.previewSticky {
+  order: 0;
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-inline: calc(var(--space-4) * -1);
+  padding: var(--space-2) var(--space-4) var(--space-3);
+  background-color: var(--color-bg);
+}
+
+/* "Mesa de trabajo": papel con puntitos, como una plancha de corte. */
+.previewFrame {
+  position: relative;
+  height: var(--preview-height-mobile);
+  padding: var(--space-3);
+  border-radius: var(--radius-card);
+  background-color: var(--color-surface-muted);
+  background-image: radial-gradient(var(--color-border) var(--border-width-strong), transparent 0);
+  background-size: var(--space-4) var(--space-4);
+}
+
+.frameFlower {
+  position: absolute;
+  top: calc(var(--flower-size-sm) / -3);
+  right: var(--space-6);
+  z-index: 1;
+  transform: rotate(14deg);
+}
+
+.sizeComparison {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  padding: var(--space-2);
+  border-radius: var(--radius-control);
+  background-color: var(--color-bg);
+}
+
+/* Mobile: el panel se disuelve; la barra es fija y el detalle va al final. */
+.summaryPanel {
+  display: contents;
+}
+
+.previewCaption {
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.previewCaption strong {
+  color: var(--color-text);
+}
+
+.notice:empty {
+  display: none;
+}
+
+.notice {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-control);
+  background-color: var(--color-accent-soft);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.options {
+  order: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  min-width: 0;
+}
+
+.extras {
+  order: 2;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Mismo estilo que los títulos de los grupos de opciones. */
+.stepTitle {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  font-variation-settings: normal;
+}
+
+@media (min-width: 1024px) {
+  .configurator {
+    padding: var(--space-10) var(--space-8) var(--space-16);
+  }
+
+  .title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .intro {
+    margin-bottom: var(--space-8);
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    align-items: start;
+    gap: var(--space-12);
+  }
+
+  /* Desktop: la columna de la izquierda acompaña el scroll de las opciones. */
+  .previewColumn {
+    position: sticky;
+    top: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .previewSticky {
+    position: static;
+    margin: 0;
+    padding: 0;
+  }
+
+  .previewFrame {
+    height: var(--preview-height-desktop);
+    padding: var(--space-6);
+  }
+
+  .sizeComparison {
+    left: var(--space-4);
+    bottom: var(--space-4);
+  }
+
+  /* Desktop: precio, detalle y guardar juntos, en una tarjeta con costura. */
+  .summaryPanel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    border-radius: var(--radius-card);
+    background-color: var(--color-surface);
+  }
+
+  .summaryPanel::after {
+    content: '';
+    position: absolute;
+    inset: var(--border-stitch-gap);
+    border: var(--border-stitch-width) dashed var(--color-stitch);
+    border-radius: calc(var(--radius-card) - var(--border-stitch-gap));
+    pointer-events: none;
+  }
+}

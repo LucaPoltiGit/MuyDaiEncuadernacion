@@ -1,19 +1,24 @@
 /**
- * Design tokens: única fuente de verdad para colores, tipografía,
- * espaciado, radios y sombras. Ningún componente debe "hardcodear"
- * estos valores — siempre se referencian con var(--token).
+ * Design tokens de MuyDai: única fuente de verdad para colores, tipografía,
+ * espaciado, radios, sombras, capas (z-index) y medidas de layout. Ningún
+ * componente debe "hardcodear" estos valores — siempre var(--token).
  *
  * Dos niveles:
- *  - Primitivos (--color-neutral-900, --space-4...): la paleta/escala cruda.
- *  - Semánticos (--color-text, --color-bg...): lo que los componentes
- *    realmente usan. Si mañana cambia la marca, se tocan los primitivos
- *    acá y no hace falta tocar ningún componente.
+ *  - Primitivos (--color-pink-500, --space-4...): la paleta/escala cruda.
+ *  - Semánticos (--color-action, --color-text...): lo que los componentes
+ *    realmente usan. Si cambia la marca, se tocan los primitivos acá.
  *
- * Breakpoints: las custom properties de CSS no se pueden leer dentro de
- * un @media (no se interpolan ahí), así que quedan documentados acá como
- * referencia y se repiten como literales en cada media query, mobile-first
- * (el estilo base es mobile, se agranda con min-width). Los mismos
- * números están disponibles en TS en `src/constants/breakpoints.ts`.
+ * Reglas de uso de la paleta (contrastes medidos, WCAG AA):
+ *  - Rosa #ff52bc = color de ACCIÓN (botones). Siempre con texto tinta
+ *    #1f1a1c encima (5.9:1). Nunca texto blanco sobre rosa (2.9:1, falla).
+ *  - Rosa oscuro #b5146f = links y texto destacado sobre crema (6.1:1).
+ *  - Naranja #ff9d4d = acento decorativo puntual (badges, sellos), 1-2 por
+ *    pantalla, nunca como color de texto (2.1:1 sobre blanco, falla).
+ *  - Fondo crema; el blanco puro queda para superficies (tarjetas, fotos).
+ *
+ * Breakpoints: las custom properties no se pueden leer dentro de un @media,
+ * así que quedan documentados acá y se repiten como literales en cada
+ * media query, mobile-first. Mismos números en `src/constants/breakpoints.ts`.
  *
  *   tablet  ≥ 640px
  *   desktop ≥ 1024px
@@ -21,82 +26,190 @@
 
 :root {
   /* Color: primitivos de marca */
-  --color-primary-500: #4f46e5;
-  --color-primary-600: #4338ca;
+  --color-pink-50: #fff0f8;
+  --color-pink-100: #ffe3f3;
+  --color-pink-500: #ff52bc;
+  --color-pink-600: #f2399f;
+  --color-pink-700: #b5146f;
+  --color-pink-800: #8f0f58;
+  --color-orange-100: #ffe8d6;
+  --color-orange-400: #ff9d4d;
+  --color-orange-800: #9a4a0b;
 
-  /* Color: primitivos neutros */
-  --color-neutral-0: #ffffff;
-  --color-neutral-50: #f8fafc;
-  --color-neutral-100: #f1f5f9;
-  --color-neutral-200: #e2e8f0;
-  --color-neutral-300: #cbd5e1;
-  --color-neutral-600: #475569;
-  --color-neutral-800: #1e293b;
-  --color-neutral-900: #0f172a;
+  /* Color: primitivos neutros (cálidos) */
+  --color-paper-0: #ffffff;
+  --color-paper-50: #fff8f2;
+  --color-paper-100: #f7ece1;
+  --color-paper-200: #eadbcd;
+  --color-ink-400: #8a7d80;
+  --color-ink-600: #5c5054;
+  --color-ink-900: #1f1a1c;
 
-  /* Color: primitivos de estado */
-  --color-success-500: #16a34a;
-  --color-error-500: #dc2626;
+  /* Color: primitivos de estado (fondo suave + tono fuerte) */
+  --color-green-100: #dcefe2;
+  --color-green-700: #1f6b3d;
+  --color-blue-100: #dde8f6;
+  --color-blue-700: #24508a;
+  --color-red-100: #f8dedc;
+  --color-red-700: #a3241b;
 
-  /* Color: semántico */
-  --color-bg: var(--color-neutral-0);
-  --color-bg-muted: var(--color-neutral-50);
-  --color-text: var(--color-neutral-900);
-  --color-text-muted: var(--color-neutral-600);
-  --color-border: var(--color-neutral-200);
-  --color-accent: var(--color-primary-500);
-  --color-accent-hover: var(--color-primary-600);
-  --color-on-accent: var(--color-neutral-0);
-  --color-focus-ring: var(--color-primary-500);
-  --color-success: var(--color-success-500);
-  --color-error: var(--color-error-500);
+  /* Color: semántico — superficies y texto */
+  --color-bg: var(--color-paper-50);
+  --color-surface: var(--color-paper-0);
+  --color-surface-muted: var(--color-paper-100);
+  --color-text: var(--color-ink-900);
+  --color-text-muted: var(--color-ink-600);
+  --color-border: var(--color-paper-200);
+  --color-border-strong: var(--color-ink-400);
 
-  /* Tipografía */
-  --font-family-base: system-ui, 'Segoe UI', Roboto, sans-serif;
+  /* Color: semántico — acción y acentos */
+  --color-action: var(--color-pink-500);
+  --color-action-hover: var(--color-pink-600);
+  --color-on-action: var(--color-ink-900);
+  --color-action-soft: var(--color-pink-100);
+  --color-link: var(--color-pink-700);
+  --color-link-hover: var(--color-pink-800);
+  --color-accent: var(--color-orange-400);
+  --color-accent-soft: var(--color-orange-100);
+  --color-focus-ring: var(--color-ink-900);
+  --color-stitch: var(--color-pink-500);
+  --color-flower-petal: var(--color-pink-500);
+  --color-flower-stitch: var(--color-paper-50);
+  --color-flower-center: var(--color-orange-400);
+
+  /* Color: semántico — superficies oscuras (footer, botón de WhatsApp) */
+  --color-dark-bg: var(--color-ink-900);
+  --color-on-dark: var(--color-paper-50);
+  --color-on-dark-muted: var(--color-paper-200);
+  --color-link-on-dark: var(--color-pink-500);
+
+  --color-backdrop: rgba(31, 26, 28, 0.4);
+
+  /* Color: semántico — deshabilitado */
+  --color-disabled-bg: var(--color-paper-100);
+  --color-disabled-text: var(--color-ink-600);
+
+  /* Color: semántico — estados */
+  --color-success: var(--color-green-700);
+  --color-success-soft: var(--color-green-100);
+  --color-info: var(--color-blue-700);
+  --color-info-soft: var(--color-blue-100);
+  --color-warning: var(--color-orange-800);
+  --color-warning-soft: var(--color-orange-100);
+  --color-error: var(--color-red-700);
+  --color-error-soft: var(--color-red-100);
+
+  /* Tipografía (fuentes cargadas en index.html desde Google Fonts) */
+  --font-family-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-family-base: 'DM Sans', system-ui, 'Segoe UI', Roboto, sans-serif;
+  /* Fraunces con el eje SOFT al máximo: terminaciones redondeadas, más tiernas.
+     WONK (letras "bailando") queda reservado para el título principal del home. */
+  --font-variation-display: 'SOFT' 100, 'WONK' 0;
+  --font-variation-display-playful: 'SOFT' 100, 'WONK' 1;
+  --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
   --font-size-lg: 1.125rem;
   --font-size-xl: 1.5rem;
   --font-size-2xl: 2rem;
+  --font-size-3xl: 2.5rem;
+  --font-size-4xl: 3.25rem;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
+  --font-weight-semibold: 600;
   --font-weight-bold: 700;
-  --line-height-tight: 1.2;
+  --line-height-tight: 1.15;
   --line-height-base: 1.5;
+  --letter-spacing-wide: 0.04em;
+  --letter-spacing-tight: -0.02em;
 
   /* Espaciado (escala de 4px) */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
+  --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
+  --space-10: 2.5rem;
   --space-12: 3rem;
+  --space-16: 4rem;
 
-  /* Radios */
+  /* Radios: primitivos */
   --radius-sm: 4px;
   --radius-md: 8px;
-  --radius-lg: 16px;
+  --radius-lg: 12px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
   --radius-full: 9999px;
 
-  /* Sombras */
-  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.08);
-  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.1);
+  /* Radios: semánticos. Lo decorativo es bien redondo (tierno); lo
+     funcional (campos, precios, tablas) queda con radio moderado. */
+  --radius-card: var(--radius-xl);
+  --radius-control: var(--radius-lg);
+  --radius-swatch: var(--radius-md);
+  --radius-button: var(--radius-full);
+  --radius-badge: var(--radius-full);
+  /* Marco en arco para fotos destacadas: semicírculo arriba, curva suave abajo. */
+  --radius-arch: var(--radius-full) var(--radius-full) var(--radius-xl) var(--radius-xl);
+
+  /* Bordes */
+  --border-width: 1px;
+  --border-width-strong: 2px;
+  --border-stitch-width: 2px;
+  --border-stitch-gap: 6px;
+
+  /* Sombras: casi planas, las fotos son las protagonistas */
+  --shadow-sm: 0 1px 2px rgba(31, 26, 28, 0.06);
+  --shadow-md: 0 6px 18px rgba(31, 26, 28, 0.1);
+  /* "Sticker": sombra sólida desplazada, solo en botón principal y badges. */
+  --shadow-sticker-offset: 3px;
+  --shadow-sticker: var(--shadow-sticker-offset) var(--shadow-sticker-offset) 0 var(--color-ink-900);
+
+  /* Onda con costura (bordes de header, footer y menú). Se repite en
+     tramos de tamaño fijo, así la onda y el punteado nunca se estiran. */
+  --wave-period: 7.5rem;
+  --wave-height: 1.125rem;
+
+  /* Medidas de layout */
+  --tap-target-min: 44px;
+  --container-max: 72rem;
+  --measure-narrow: 24rem;
+  --measure-text: 40rem;
+  --header-height: 4rem;
+  --bottom-bar-height: 5.25rem;
+  --preview-height-mobile: 24svh;
+  --size-comparison-width: 4.5rem;
+  --preview-height-desktop: 22rem;
+  --fabric-tile-size: 2.5rem;
+  --icon-size-md: 1.5rem;
+  --icon-size-lg: 1.75rem;
+  --floating-button-size: 3.5rem;
+  --flower-size-xs: 0.875rem;
+  --flower-size-sm: 1.25rem;
+  --flower-size-md: 2rem;
+  --flower-size-lg: 4.5rem;
+  --flower-size-xl: 8rem;
+  --option-min-width: 7rem;
+  --swatch-min-width: 6rem;
+  --option-min-width-desktop: 9rem;
+
+  /* Capas: todo lo fijo/flotante usa estos valores, nunca un número suelto */
+  --z-base: 0;
+  --z-header: 100;
+  --z-bottom-bar: 200;
+  --z-floating: 300;
+  --z-overlay: 400;
+  --z-modal: 500;
 
   /* Transiciones */
   --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-reduced-motion: reduce) {
   :root {
-    --color-bg: var(--color-neutral-900);
-    --color-bg-muted: #16213a;
-    --color-text: var(--color-neutral-50);
-    --color-text-muted: var(--color-neutral-300);
-    --color-border: var(--color-neutral-800);
-    --color-accent: #818cf8;
-    --color-accent-hover: #a5b4fc;
-    --color-on-accent: var(--color-neutral-900);
-    --color-focus-ring: #a5b4fc;
+    --transition-fast: 0ms;
+    --transition-base: 0ms;
   }
 }

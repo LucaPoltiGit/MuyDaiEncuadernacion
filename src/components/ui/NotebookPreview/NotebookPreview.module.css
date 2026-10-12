@@ -1,0 +1,89 @@
+/* Colores del dibujo: siempre tokens. Los grosores de línea son unidades
+   internas del SVG (se escalan con el dibujo). */
+.preview {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.preview * {
+  transition:
+    x var(--transition-base),
+    y var(--transition-base),
+    width var(--transition-base),
+    height var(--transition-base);
+}
+
+.shadow {
+  fill: var(--color-text);
+  opacity: 0.1;
+}
+
+.contactShadow {
+  fill: var(--color-text);
+  opacity: 0.22;
+}
+
+.pages {
+  fill: var(--color-surface);
+  stroke: var(--color-border);
+  stroke-width: 1.5;
+}
+
+.coverEdge {
+  fill: none;
+  stroke: var(--color-text);
+  stroke-width: 2;
+}
+
+.spine {
+  fill: var(--color-text);
+}
+
+.spineLine {
+  stroke: var(--color-text);
+  stroke-width: 1.5;
+  opacity: 0.4;
+}
+
+.exposedSpine {
+  fill: var(--color-text);
+  opacity: 0.18;
+}
+
+.thread {
+  stroke: var(--color-bg);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+
+.hole {
+  fill: var(--color-text);
+}
+
+.ring {
+  fill: none;
+  stroke: var(--color-text);
+  stroke-width: 2.4;
+}
+
+.label rect {
+  fill: var(--color-bg);
+  stroke: var(--color-text);
+  stroke-width: 1.5;
+}
+
+.label .labelStitch {
+  fill: none;
+  stroke: var(--color-stitch);
+  stroke-width: 1.2;
+  stroke-dasharray: 4 3;
+}
+
+.label text {
+  fill: var(--color-text);
+  font-family: var(--font-family-display);
+  font-variation-settings: var(--font-variation-display);
+  font-weight: var(--font-weight-semibold);
+}

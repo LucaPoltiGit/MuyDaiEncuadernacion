@@ -1,0 +1,152 @@
+.group {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.legend {
+  padding: 0;
+  margin-bottom: var(--space-3);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+}
+
+.hint {
+  margin-bottom: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.options {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.chips {
+  grid-template-columns: repeat(auto-fill, minmax(var(--option-min-width), 1fr));
+}
+
+/* Muestras más chicas que los chips: entran 3 por fila en un celular. */
+.swatches {
+  grid-template-columns: repeat(auto-fill, minmax(var(--swatch-min-width), 1fr));
+  gap: var(--space-2);
+}
+
+.list {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .chips,
+  .swatches {
+    grid-template-columns: repeat(auto-fill, minmax(var(--option-min-width-desktop), 1fr));
+  }
+}
+
+.option {
+  position: relative;
+  display: flex;
+}
+
+/* El radio nativo queda accesible (teclado y lector de pantalla) pero
+   invisible: la tarjeta-etiqueta es lo que se ve y recibe el foco visual. */
+.radio {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: var(--tap-target-min);
+  padding: var(--space-3);
+  border: var(--border-width) solid var(--color-border-strong);
+  border-radius: var(--radius-control);
+  background-color: var(--color-surface);
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.card:hover {
+  border-color: var(--color-text);
+}
+
+/* Elegida: borde rosa profundo y una florcita en la esquina (no solo color). */
+.radio:checked + .card {
+  border-color: var(--color-link);
+  border-width: var(--border-width-strong);
+  /* Compensa el borde más grueso para que el contenido no salte. */
+  padding: calc(var(--space-3) - var(--border-width));
+}
+
+.selectedMark {
+  position: absolute;
+  top: calc(var(--flower-size-sm) / -2.5);
+  right: calc(var(--flower-size-sm) / -2.5);
+  transform: rotate(-12deg);
+}
+
+.radio:focus-visible + .card {
+  outline: var(--border-width-strong) solid var(--color-focus-ring);
+  outline-offset: var(--border-width-strong);
+}
+
+.radio[aria-disabled='true'] + .card {
+  background-color: var(--color-disabled-bg);
+  border-color: var(--color-border);
+  color: var(--color-disabled-text);
+  cursor: not-allowed;
+}
+
+.swatches .card {
+  padding: var(--space-2);
+}
+
+.swatches .radio:checked + .card {
+  padding: calc(var(--space-2) - var(--border-width));
+}
+
+.media {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-swatch);
+}
+
+.radio[aria-disabled='true'] + .card .media {
+  opacity: 0.5;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.label {
+  font-weight: var(--font-weight-medium);
+}
+
+.detail {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.reason {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}

@@ -1,0 +1,31 @@
+.comparison {
+  display: block;
+  width: var(--size-comparison-width);
+  height: auto;
+}
+
+.size {
+  fill: var(--color-surface);
+  stroke: var(--color-border-strong);
+  stroke-width: 1.2;
+  stroke-dasharray: 3 2;
+}
+
+.selected {
+  fill: var(--color-action);
+  stroke: var(--color-text);
+  stroke-width: 1.5;
+}
+
+.label,
+.labelSelected {
+  font-family: var(--font-family-base);
+  /* Unidades del dibujo (escala con el SVG), no píxeles de pantalla. */
+  font-size: 10px;
+  fill: var(--color-text-muted);
+}
+
+.labelSelected {
+  font-weight: var(--font-weight-bold);
+  fill: var(--color-text);
+}

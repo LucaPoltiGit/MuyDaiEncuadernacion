@@ -1,0 +1,67 @@
+/* Círculo tinta con ícono crema y anillo de costura rosa: reconocible por la
+   silueta del ícono, sin meter el verde de WhatsApp en la paleta. */
+.button {
+  position: fixed;
+  right: var(--space-4);
+  bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
+  z-index: var(--z-floating);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--floating-button-size);
+  height: var(--floating-button-size);
+  border-radius: var(--radius-full);
+  color: var(--color-on-dark);
+  filter: drop-shadow(var(--shadow-md));
+  transition: transform var(--transition-fast);
+}
+
+.shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Contorno crema: se distingue igual sobre el fondo crema y sobre el footer oscuro. */
+.outline {
+  fill: var(--color-on-dark);
+}
+
+.scallop {
+  fill: var(--color-dark-bg);
+}
+
+.stitch {
+  fill: none;
+  stroke: var(--color-stitch);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 3 4;
+}
+
+.button > :last-child {
+  position: relative;
+}
+
+.button:hover {
+  color: var(--color-on-dark);
+  transform: translateY(calc(var(--space-1) * -1)) rotate(-8deg);
+}
+
+/* Sobre una barra fija inferior (precio + agregar al carrito) no la tapa. */
+.raised {
+  bottom: calc(var(--bottom-bar-height) + var(--space-4) + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 1024px) {
+  .button {
+    right: var(--space-8);
+    bottom: var(--space-8);
+  }
+
+  /* En desktop la barra de precio no es fija: no hace falta elevarlo. */
+  .raised {
+    bottom: var(--space-8);
+  }
+}

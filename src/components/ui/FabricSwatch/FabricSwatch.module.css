@@ -1,0 +1,9 @@
+.swatch {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-swatch);
+  background-repeat: repeat;
+  background-size: var(--fabric-tile-size);
+  background-position: center;
+}

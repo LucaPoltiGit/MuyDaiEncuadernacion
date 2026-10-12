@@ -1,0 +1,165 @@
+/* Footer oscuro: la "contratapa" del cuaderno, con costura rosa como lomo. */
+.footer {
+  position: relative;
+  background-color: var(--color-dark-bg);
+  color: var(--color-on-dark);
+  /* Espacio extra abajo para que el botón flotante no tape la línea legal. */
+  padding-bottom: calc(var(--floating-button-size) + var(--space-6));
+}
+
+/* Flor grande asomando desde la esquina: una de las pocas flores grandes
+   por pantalla. Recortada por el borde del footer. */
+.footer {
+  overflow: hidden;
+}
+
+.flower {
+  position: absolute;
+  top: var(--space-4);
+  right: calc(var(--flower-size-xl) / -3);
+  transform: rotate(18deg);
+  opacity: 0.9;
+}
+
+.inner {
+  position: relative;
+}
+
+.links a,
+.legal a {
+  color: var(--color-link-on-dark);
+}
+
+.links a:hover,
+.legal a:hover {
+  color: var(--color-on-dark);
+}
+
+.footer :focus-visible {
+  outline-color: var(--color-on-dark);
+}
+
+.inner {
+  display: grid;
+  gap: var(--space-10);
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-12) var(--space-4) var(--space-8);
+}
+
+.brandBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.tagline {
+  /* Deja lugar a la flor que asoma por la derecha. */
+  max-width: min(var(--measure-narrow), calc(100% - var(--flower-size-xl) / 2));
+  font-family: var(--font-family-display);
+  font-style: italic;
+  font-size: var(--font-size-lg);
+}
+
+.social {
+  display: flex;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.socialLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--tap-target-min);
+  min-height: var(--tap-target-min);
+  border: var(--border-width) solid var(--color-on-dark-muted);
+  border-radius: var(--radius-full);
+}
+
+.footer .socialLink {
+  color: var(--color-on-dark);
+}
+
+.footer .socialLink:hover {
+  color: var(--color-link-on-dark);
+  border-color: var(--color-link-on-dark);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.columnTitle {
+  font-size: var(--font-size-lg);
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target-min);
+}
+
+.muted {
+  max-width: var(--measure-narrow);
+  color: var(--color-on-dark-muted);
+}
+
+.withdrawal {
+  align-self: flex-start;
+  margin-top: var(--space-2);
+}
+
+.legal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-6) var(--space-4) 0;
+  border-top: var(--border-width) solid var(--color-on-dark-muted);
+  font-size: var(--font-size-sm);
+  color: var(--color-on-dark-muted);
+}
+
+@media (min-width: 640px) {
+  .inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .brandBlock {
+    grid-column: 1 / -1;
+  }
+
+  .legal {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 1024px) {
+  .inner {
+    grid-template-columns: 2fr 1fr 1.5fr;
+    padding-inline: var(--space-8);
+  }
+
+  .brandBlock {
+    grid-column: auto;
+  }
+
+  .legal {
+    padding-inline: var(--space-8);
+  }
+}
