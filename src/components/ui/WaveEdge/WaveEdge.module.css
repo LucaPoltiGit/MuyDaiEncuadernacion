@@ -1,0 +1,31 @@
+/* Los tramos son máscaras (solo importa la forma, no el color): el color
+   real sale de los tokens que llegan por --wave-fill y --wave-stitch. */
+.wave {
+  position: relative;
+  height: var(--wave-height);
+  pointer-events: none;
+}
+
+.fill,
+.stitch {
+  position: absolute;
+  inset: 0;
+  mask-repeat: repeat-x;
+  mask-size: var(--wave-period) var(--wave-height);
+  mask-position: left top;
+}
+
+.fill {
+  background-color: var(--wave-fill);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 120 18'%3E%3Cpath d%3D'M0 0V11Q30 19 60 11T120 11V0Z'%2F%3E%3C%2Fsvg%3E");
+}
+
+.stitch {
+  background-color: var(--wave-stitch);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 120 18'%3E%3Cpath d%3D'M0 7Q30 15 60 7T120 7' fill%3D'none' stroke%3D'black' stroke-width%3D'2' stroke-linecap%3D'round' pathLength%3D'100' stroke-dasharray%3D'5 5' stroke-dashoffset%3D'-2.5'%2F%3E%3C%2Fsvg%3E");
+}
+
+/* Para abrir un bloque por arriba, la misma onda espejada. */
+.top {
+  transform: scaleY(-1);
+}

@@ -1,0 +1,164 @@
+.showcase {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-8) var(--space-4) var(--space-16);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.title {
+  font-size: var(--font-size-3xl);
+}
+
+.intro {
+  max-width: var(--measure-text);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-top: var(--space-6);
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+.blockTitle {
+  font-size: var(--font-size-xl);
+}
+
+.colorGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.colorItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.colorChip {
+  height: var(--space-16);
+  margin-bottom: var(--space-2);
+  border-radius: var(--radius-md);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.colorName {
+  font-weight: var(--font-weight-bold);
+}
+
+.colorUse,
+.note {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.displaySample {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-tight);
+}
+
+.bodySample {
+  max-width: var(--measure-text);
+  margin-top: var(--space-4);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.cardGrid,
+.formGrid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.cardTitle {
+  font-size: var(--font-size-lg);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.decorationGrid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.flowerRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.waveSample {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-6) 0;
+  border-radius: var(--radius-control);
+  overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .colorGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .formGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mobileFull {
+    width: auto;
+    align-self: flex-start;
+  }
+}
+
+@media (min-width: 1024px) {
+  .showcase {
+    padding-inline: var(--space-8);
+  }
+
+  .title {
+    font-size: var(--font-size-4xl);
+  }
+
+  .displaySample {
+    font-size: var(--font-size-3xl);
+  }
+
+  .colorGrid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .cardGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .decorationGrid {
+    grid-template-columns: 3fr 2fr;
+  }
+}

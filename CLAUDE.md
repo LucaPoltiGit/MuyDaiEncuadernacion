@@ -25,19 +25,22 @@ prolija y escalable para probar diseños de página rápido.
 Cada capa tiene una sola responsabilidad. Los componentes nunca saltan capas
 (ej. una `page` no lee `data/mock` directo, pasa por un `service`).
 
-| Carpeta                    | Qué va ahí                                                                                                                    |
-| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `src/styles/tokens.css`    | Todas las variables de diseño: color, tipografía, espaciado, radios, sombras. Primitivos + semánticos.                        |
-| `src/constants/`           | Constantes de la app: rutas, breakpoints, límites.                                                                            |
-| `src/content/`             | Todos los textos visibles, en español, organizados por página/sección. Preparado para agregar otro idioma después.            |
-| `src/data/mock/`           | Datos falsos (JSON o TS) para desarrollar sin backend.                                                                        |
-| `src/services/`            | Única capa que sabe de dónde vienen los datos. Hoy lee `data/mock`; cuando haya API real, solo cambia este archivo, nada más. |
-| `src/hooks/`               | Lógica reutilizable (llaman a `services/`, manejan estado de carga/error).                                                    |
-| `src/types/`               | Tipos compartidos entre capas.                                                                                                |
-| `src/components/ui/`       | Componentes visuales genéricos (botón, tarjeta...), sin lógica de negocio, sin textos ni datos propios.                       |
-| `src/components/sections/` | Combinan componentes `ui/` + un hook + contenido de `content/` en un bloque de página.                                        |
-| `src/pages/`               | Componen secciones en una pantalla completa.                                                                                  |
-| `src/test/`                | Configuración global de tests (`setup.ts`).                                                                                   |
+| Carpeta                    | Qué va ahí                                                                                                                     |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `src/styles/tokens.css`    | Todas las variables de diseño: color, tipografía, espaciado, radios, sombras. Primitivos + semánticos.                         |
+| `src/constants/`           | Constantes de la app: rutas, breakpoints, límites.                                                                             |
+| `src/content/`             | Todos los textos visibles, en español, organizados por página/sección. Preparado para agregar otro idioma después.             |
+| `src/data/mock/`           | Datos falsos (JSON o TS) para desarrollar sin backend.                                                                         |
+| `src/services/`            | Única capa que sabe de dónde vienen los datos. Hoy lee `data/mock`; cuando haya API real, solo cambia este archivo, nada más.  |
+| `src/domain/`              | Reglas de negocio puras y testeadas (precio, restricciones, plazos, formato de dinero). Sin React ni services: reciben datos.  |
+| `src/hooks/`               | Lógica reutilizable (llaman a `services/`, manejan estado de carga/error).                                                     |
+| `src/types/`               | Tipos compartidos entre capas.                                                                                                 |
+| `src/components/ui/`       | Componentes visuales genéricos (botón, tarjeta...), sin lógica de negocio, sin textos ni datos propios.                        |
+| `src/components/sections/` | Combinan componentes `ui/` + un hook + contenido de `content/` en un bloque de página.                                         |
+| `src/pages/`               | Componen secciones en una pantalla completa.                                                                                   |
+| `src/layouts/`             | Estructura común a varias páginas (header, footer, WhatsApp). Las rutas ajustan el layout con `handle.layout`, no con efectos. |
+| `src/router.tsx`           | Árbol de rutas (React Router). Los paths salen de `src/constants/routes.ts`, nunca strings sueltos.                            |
+| `src/test/`                | Configuración global de tests (`setup.ts`) y `renderWithRouter` para testear componentes que usan el router.                   |
 
 Reglas específicas por tipo de archivo (CSS, componentes, tests) están en
 `.claude/rules/` y se cargan automáticamente según el archivo que se esté

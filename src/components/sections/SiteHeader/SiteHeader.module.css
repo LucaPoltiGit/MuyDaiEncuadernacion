@@ -1,0 +1,255 @@
+/* ---- Franja legal ---- */
+.utilityBar {
+  background-color: var(--color-surface-muted);
+  font-size: var(--font-size-sm);
+}
+
+.utilityInner {
+  display: flex;
+  justify-content: flex-end;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-1) var(--space-4);
+}
+
+.utilityLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target-min);
+  margin-block: calc(var(--space-3) * -1);
+  color: var(--color-text);
+}
+
+/* ---- Header ---- */
+.header {
+  position: relative;
+  z-index: var(--z-header);
+  /* Sin fondo propio: el crema lo ponen la barra y la onda con costura de
+     abajo, así el contenido se ve pasar por debajo de la curva. */
+  transition: transform var(--transition-base);
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+}
+
+/* Se oculta al bajar; vuelve si algo de adentro recibe foco con el teclado. */
+.hidden:not(:focus-within) {
+  transform: translateY(-100%);
+}
+
+.bar {
+  /* Por encima del fondo oscurecido del menú, para poder cerrarlo. */
+  position: relative;
+  z-index: var(--z-overlay);
+  display: grid;
+  background-color: var(--color-bg);
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: var(--container-max);
+  min-height: var(--header-height);
+  margin-inline: auto;
+  padding-inline: var(--space-2);
+}
+
+.menuToggle {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap-target-min);
+  padding-inline: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target-min);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.brand:hover {
+  color: var(--color-text);
+}
+
+.desktopNav {
+  display: none;
+}
+
+.actions {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.desktopCta {
+  display: none;
+}
+
+.iconLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--tap-target-min);
+  min-height: var(--tap-target-min);
+  border-radius: var(--radius-full);
+  color: var(--color-text);
+}
+
+.iconLink:hover {
+  color: var(--color-link);
+}
+
+.cartCount {
+  position: absolute;
+  top: var(--space-1);
+  right: 0;
+  min-width: var(--space-5);
+  height: var(--space-5);
+  padding-inline: var(--space-1);
+  border-radius: var(--radius-full);
+  background-color: var(--color-action);
+  color: var(--color-on-action);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--space-5);
+  text-align: center;
+}
+
+/* ---- Menú mobile ---- */
+.menuPanel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: var(--z-overlay);
+}
+
+.menuInner {
+  max-height: calc(100dvh - var(--header-height) - var(--wave-height));
+  overflow-y: auto;
+  padding: var(--space-6) var(--space-4) var(--space-6);
+  background-color: var(--color-bg);
+}
+
+.menuPanel[hidden] {
+  display: none;
+}
+
+.menuList,
+.menuSecondary {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menuList {
+  margin-top: var(--space-4);
+}
+
+.menuList li + li {
+  border-top: var(--border-width) dashed var(--color-border);
+}
+
+.menuLink {
+  display: flex;
+  align-items: center;
+  min-height: calc(var(--tap-target-min) + var(--space-3));
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-xl);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.menuLink:hover,
+.menuLink[aria-current='page'] {
+  color: var(--color-link);
+}
+
+.menuSecondary {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+.menuSecondaryLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap-target-min);
+  color: var(--color-text);
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-overlay) - 1);
+  background-color: var(--color-backdrop);
+}
+
+/* ---- Desktop ---- */
+@media (min-width: 1024px) {
+  .utilityInner {
+    padding-inline: var(--space-8);
+  }
+
+  .bar {
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-8);
+    padding-inline: var(--space-8);
+  }
+
+  .menuToggle,
+  .menuPanel,
+  .backdrop {
+    display: none;
+  }
+
+  .desktopNav {
+    display: block;
+    justify-self: center;
+  }
+
+  .navList {
+    display: flex;
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .navLink {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-target-min);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .navLink:hover {
+    color: var(--color-link);
+  }
+
+  /* Activo: subrayado punteado rosa, no solo cambio de color. */
+  .active {
+    text-decoration: underline dashed var(--color-stitch);
+    text-decoration-thickness: var(--border-stitch-width);
+    text-underline-offset: 0.4em;
+  }
+
+  .desktopCta {
+    display: inline-flex;
+    margin-right: var(--space-2);
+  }
+}

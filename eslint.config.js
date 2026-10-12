@@ -32,4 +32,9 @@ export default tseslint.config(
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     },
   },
+  {
+    // Los helpers de tests no se recargan en caliente: la regla no aplica.
+    files: ['src/test/**'],
+    rules: { 'react-refresh/only-export-components': 'off' },
+  },
 );

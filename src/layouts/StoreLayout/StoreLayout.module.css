@@ -1,0 +1,48 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1;
+}
+
+/* Páginas con barra fija abajo (mobile): espacio para que no tape el footer. */
+.withBottomBar {
+  padding-bottom: var(--bottom-bar-height);
+}
+
+@media (min-width: 1024px) {
+  .withBottomBar {
+    padding-bottom: 0;
+  }
+}
+
+/* El foco programático al navegar no necesita anillo visible. */
+.main:focus {
+  outline: none;
+}
+
+.main:focus-visible {
+  outline: var(--border-width-strong) solid var(--color-focus-ring);
+  outline-offset: calc(var(--border-width-strong) * -1);
+}
+
+/* Invisible hasta que recibe foco con el teclado (primer Tab). */
+.skipLink {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: var(--z-modal);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-full);
+  background-color: var(--color-action);
+  color: var(--color-on-action);
+  font-weight: var(--font-weight-bold);
+  transform: translateY(calc(-100% - var(--space-4)));
+}
+
+.skipLink:focus {
+  transform: none;
+}

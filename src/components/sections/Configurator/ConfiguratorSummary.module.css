@@ -1,0 +1,164 @@
+/* ---- Barra de precio: fija abajo en mobile ---- */
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-bottom-bar);
+  padding: var(--space-3) var(--space-4) calc(var(--space-3) + env(safe-area-inset-bottom));
+  background-color: var(--color-bg);
+  border-top: var(--border-stitch-width) dashed var(--color-stitch);
+  box-shadow: var(--shadow-md);
+}
+
+.barInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: calc(var(--bottom-bar-height) - var(--space-6));
+}
+
+.priceBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+/* En la barra mobile no hay lugar para el rótulo: queda para lectores de pantalla. */
+.totalLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.total {
+  font-family: var(--font-family-display);
+  font-variation-settings: var(--font-variation-display);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--line-height-tight);
+}
+
+.days {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.addButton {
+  flex-shrink: 0;
+}
+
+.status {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.status:empty,
+.notices:empty {
+  display: none;
+}
+
+/* Avisos de ajustes: arriba del precio, en la barra que siempre se ve. */
+.notices {
+  margin-bottom: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-control);
+  background-color: var(--color-accent-soft);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.bar .status {
+  padding-top: var(--space-2);
+}
+
+/* ---- Detalle de precio y guardar diseño ---- */
+.extras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Lo funcional (números) va recto y sobrio, sin decoración. */
+.breakdown {
+  border-top: var(--border-width) solid var(--color-border);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.breakdown summary {
+  display: flex;
+  align-items: center;
+  min-height: var(--tap-target-min);
+  color: var(--color-link);
+  font-weight: var(--font-weight-medium);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.lines {
+  margin: 0 0 var(--space-3);
+}
+
+.line {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-2);
+  border-bottom: var(--border-width) dashed var(--color-border);
+  font-size: var(--font-size-sm);
+}
+
+.line dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.lineTotal {
+  border-bottom: 0;
+  font-weight: var(--font-weight-bold);
+}
+
+.save {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+@media (min-width: 1024px) {
+  /* En desktop la barra vive dentro del panel con costura (ver Configurator). */
+  .bar {
+    position: static;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  .barInner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-4);
+  }
+
+  .totalLabel {
+    position: static;
+    width: auto;
+    height: auto;
+    clip: auto;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .total {
+    font-size: var(--font-size-3xl);
+  }
+
+  .addButton {
+    width: 100%;
+  }
+}

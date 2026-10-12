@@ -7,7 +7,9 @@
 }
 
 html {
-  color-scheme: light dark;
+  /* Por ahora solo tema claro: la paleta cálida y las fotos de producto
+     están pensadas sobre fondo crema. Un tema oscuro se agrega en tokens. */
+  color-scheme: light;
 }
 
 body {
@@ -26,7 +28,24 @@ h1,
 h2,
 h3,
 h4 {
+  margin: 0;
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-medium);
+  font-variation-settings: var(--font-variation-display);
   line-height: var(--line-height-tight);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--color-link);
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--color-link-hover);
 }
 
 img,
@@ -40,11 +59,25 @@ input,
 textarea,
 select {
   font: inherit;
+  color: inherit;
 }
 
 /* Foco visible en toda la app: nunca se oculta el outline sin
    reemplazarlo por algo igual o más visible (regla de accesibilidad). */
 :focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 2px;
+  outline: var(--border-width-strong) solid var(--color-focus-ring);
+  outline-offset: var(--border-width-strong);
+}
+
+/* Oculta visualmente pero deja el contenido para lectores de pantalla. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
