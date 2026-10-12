@@ -76,6 +76,9 @@
   --color-flower-petal: var(--color-pink-500);
   --color-flower-stitch: var(--color-paper-50);
   --color-flower-center: var(--color-orange-400);
+  /* Mariposa del logo: trazo único en degradé rosa → naranja. */
+  --color-butterfly-start: var(--color-pink-500);
+  --color-butterfly-end: var(--color-orange-400);
 
   /* Color: semántico — superficies oscuras (footer, botón de WhatsApp) */
   --color-dark-bg: var(--color-ink-900);
@@ -190,6 +193,15 @@
   --flower-size-md: 2rem;
   --flower-size-lg: 4.5rem;
   --flower-size-xl: 8rem;
+  --butterfly-size-sm: 1.75rem;
+  --butterfly-size-md: 3rem;
+  --butterfly-size-lg: 5.5rem;
+  --butterfly-size-xl: 9rem;
+  /* Grosor del trazo en px reales (el svg usa non-scaling-stroke). */
+  --butterfly-stroke-sm: 1.75px;
+  --butterfly-stroke-md: 2.5px;
+  --butterfly-stroke-lg: 3.5px;
+  --butterfly-stroke-xl: 5px;
   --option-min-width: 7rem;
   --swatch-min-width: 6rem;
   --option-min-width-desktop: 9rem;

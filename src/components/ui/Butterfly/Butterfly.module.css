@@ -1,0 +1,61 @@
+.butterfly {
+  display: inline-block;
+  flex-shrink: 0;
+  max-width: none;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.lines {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sm {
+  width: var(--butterfly-size-sm);
+  height: var(--butterfly-size-sm);
+  --stroke: var(--butterfly-stroke-sm);
+}
+
+.md {
+  width: var(--butterfly-size-md);
+  height: var(--butterfly-size-md);
+  --stroke: var(--butterfly-stroke-md);
+}
+
+.lg {
+  width: var(--butterfly-size-lg);
+  height: var(--butterfly-size-lg);
+  --stroke: var(--butterfly-stroke-lg);
+}
+
+.xl {
+  width: var(--butterfly-size-xl);
+  height: var(--butterfly-size-xl);
+  --stroke: var(--butterfly-stroke-xl);
+}
+
+.lines {
+  stroke-width: var(--stroke);
+}
+
+.stopStart {
+  stop-color: var(--color-butterfly-start);
+}
+
+.stopEnd {
+  stop-color: var(--color-butterfly-end);
+}
+
+.soft .lines {
+  stroke: var(--color-action-soft);
+}
+
+.onDark .lines {
+  stroke: var(--color-on-dark);
+}
+
+.flip {
+  transform: scaleX(-1);
+}

@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router';
+import { Butterfly } from '../../ui/Butterfly/Butterfly';
 import { buttonClassName } from '../../ui/Button/buttonClassName';
 import { Icon } from '../../ui/Icon/Icon';
 import { WaveEdge } from '../../ui/WaveEdge/WaveEdge';
@@ -80,6 +81,7 @@ export function SiteHeader({ cartCount, sticky = true }: SiteHeaderProps) {
           </button>
 
           <Link to={ROUTES.home} className={styles.brand}>
+            <Butterfly size="sm" />
             <Wordmark name={text.brandName} size="responsive" />
           </Link>
 
