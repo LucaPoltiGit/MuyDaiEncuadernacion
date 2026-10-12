@@ -25,6 +25,15 @@
   position: relative;
 }
 
+/* Mariposa en vuelo, sobre la flor de la esquina. */
+.butterfly {
+  position: absolute;
+  top: calc(var(--flower-size-xl) + var(--space-4));
+  right: var(--space-6);
+  transform: rotate(-12deg);
+  opacity: 0.9;
+}
+
 .links a,
 .legal a {
   color: var(--color-link-on-dark);

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Badge } from '../../ui/Badge/Badge';
 import { Button } from '../../ui/Button/Button';
+import { Butterfly } from '../../ui/Butterfly/Butterfly';
 import { Card } from '../../ui/Card/Card';
 import { FabricSwatch } from '../../ui/FabricSwatch/FabricSwatch';
 import { Flower } from '../../ui/Flower/Flower';
@@ -69,6 +70,17 @@ export function StyleGuideShowcase() {
             </div>
             <h3 className={styles.cardTitle}>{text.decoration.flowerTitle}</h3>
             <p>{text.decoration.flowerText}</p>
+          </Card>
+          <Card variant="muted">
+            <div className={styles.flowerRow}>
+              <Butterfly size="xl" />
+              <Butterfly size="lg" flip />
+              <Butterfly size="md" />
+              <Butterfly size="sm" />
+              <Butterfly size="lg" tone="soft" />
+            </div>
+            <h3 className={styles.cardTitle}>{text.decoration.butterflyTitle}</h3>
+            <p>{text.decoration.butterflyText}</p>
           </Card>
           <Card variant="muted">
             <div className={styles.waveSample}>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { Butterfly } from '../../ui/Butterfly/Butterfly';
 import { buttonClassName } from '../../ui/Button/buttonClassName';
 import { Flower } from '../../ui/Flower/Flower';
 import { Icon } from '../../ui/Icon/Icon';
@@ -27,6 +28,7 @@ export function SiteFooter() {
       <WaveEdge edge="top" fill="var(--color-dark-bg)" />
       <footer className={styles.footer}>
         <Flower size="xl" className={styles.flower} />
+        <Butterfly size="lg" tone="onDark" className={styles.butterfly} />
         <div className={styles.inner}>
           <div className={styles.brandBlock}>
             <Wordmark name={text.brandName} size="lg" />

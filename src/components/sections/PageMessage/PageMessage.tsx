@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Butterfly } from '../../ui/Butterfly/Butterfly';
 import { Card } from '../../ui/Card/Card';
 import { Flower } from '../../ui/Flower/Flower';
 import styles from './PageMessage.module.css';
@@ -18,6 +19,7 @@ export function PageMessage({ title, text, eyebrow, actions }: PageMessageProps)
     <div className={styles.wrapper}>
       <Card variant="stitched" padding="lg" className={styles.card}>
         <Flower size="lg" className={styles.cornerFlower} />
+        <Butterfly size="md" className={styles.butterfly} />
         {eyebrow && (
           <p className={styles.eyebrow}>
             <Flower size="xs" />

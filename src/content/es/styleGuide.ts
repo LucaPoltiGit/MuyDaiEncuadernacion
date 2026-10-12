@@ -104,6 +104,9 @@ export const styleGuide = {
     flowerTitle: 'La flor MuyDai',
     flowerText:
       'Cinco pétalos redondos con costura y el centro naranja. Se usa poco: junto al logo, en textos chicos y alguna grande asomando en una esquina.',
+    butterflyTitle: 'La mariposa del logo',
+    butterflyText:
+      'Un solo trazo suelto, en degradé rosa → naranja. Vuela sola: una por zona, cerca del logo o cruzando un borde, nunca en fila.',
     waveTitle: 'Costura ondulada',
     waveText: 'Cierra el header y abre el footer. Lo funcional (formularios, precios) queda recto.',
   },
