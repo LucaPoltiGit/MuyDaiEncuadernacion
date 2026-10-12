@@ -43,9 +43,8 @@
     calc(var(--shadow-sticker-offset) / -3),
     calc(var(--shadow-sticker-offset) / -3)
   );
-  box-shadow:
-    calc(var(--shadow-sticker-offset) * 4 / 3) calc(var(--shadow-sticker-offset) * 4 / 3) 0
-    var(--color-text);
+  box-shadow: calc(var(--shadow-sticker-offset) * 4 / 3) calc(var(--shadow-sticker-offset) * 4 / 3)
+    0 var(--color-text);
 }
 
 .primary:active:not(:disabled) {
