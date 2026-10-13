@@ -12,6 +12,7 @@ export const layout = {
     faq: 'Preguntas frecuentes',
     configurator: 'Diseñá tu cuaderno',
     account: 'Mi cuenta',
+    login: 'Ingresar',
   },
 
   menu: {

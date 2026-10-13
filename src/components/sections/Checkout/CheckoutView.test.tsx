@@ -34,7 +34,6 @@ async function fillContact() {
 function buildOrderFor(productId: string) {
   const { lines, ...rest } = buildOrder();
   return {
-    userId: rest.userId,
     customer: rest.customer,
     lines: [{ ...lines[0], productId }],
     subtotal: rest.subtotal,
@@ -50,6 +49,18 @@ function totalRow() {
 }
 
 describe('CheckoutView', () => {
+  it('con sesión, completa "Tus datos" con los de la cuenta', () => {
+    saveCartItems([buildProductItem()]);
+    renderWithRouter(
+      <CheckoutView
+        data={data}
+        contact={{ name: 'Ana Pérez', email: 'ana@example.com', phone: '11 5555 1234' }}
+      />,
+    );
+    expect(screen.getByLabelText(text.contact.name)).toHaveValue('Ana Pérez');
+    expect(screen.getByLabelText(text.contact.email)).toHaveValue('ana@example.com');
+  });
+
   it('con el carrito vacío, lleva a la tienda', () => {
     renderCheckout([]);
     expect(screen.getByRole('heading', { name: text.emptyCart.title })).toBeInTheDocument();

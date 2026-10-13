@@ -21,6 +21,7 @@ export const pages = {
       login: 'Ingresar',
       register: 'Crear cuenta',
       account: 'Mi cuenta',
+      accountDesigns: 'Mis diseños',
       admin: 'Panel de administración',
       terms: 'Términos y condiciones',
       shippingPolicy: 'Envíos',

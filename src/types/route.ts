@@ -25,3 +25,12 @@ export interface RouteHandle {
 export interface ConfiguratorLocationState {
   baseConfiguration: NotebookConfiguration;
 }
+
+/**
+ * Estado de navegación al mandar a ingresar: a dónde volver después y, si
+ * venía del configurador, el diseño que estaba armando (para no perderlo).
+ */
+export interface AuthLocationState {
+  from?: string;
+  baseConfiguration?: NotebookConfiguration;
+}

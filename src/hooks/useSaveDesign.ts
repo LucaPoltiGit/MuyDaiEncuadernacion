@@ -22,7 +22,7 @@ export function useSaveDesign(configuration: NotebookConfiguration) {
     if (session.status !== 'ready' || !session.user) return;
     setResult({ key, status: 'saving' });
     try {
-      await saveDesign(session.user.id, configuration);
+      await saveDesign(configuration);
       setResult({ key, status: 'saved' });
     } catch {
       setResult({ key, status: 'error' });

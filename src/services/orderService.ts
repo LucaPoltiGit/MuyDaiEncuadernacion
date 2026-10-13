@@ -7,6 +7,7 @@ import {
 } from '../domain/checkout/orderRules';
 import { createId } from '../domain/id';
 import type { NewOrder, Order, PaymentStatus } from '../types/order';
+import { currentUserId, requireUserId } from './authService';
 import { readDb, updateDb } from './mockDb';
 import type { MockDb } from './mockDb';
 import { simulateRequest } from './mockNetwork';
@@ -72,6 +73,8 @@ export function createOrder(newOrder: NewOrder, replacesOrderId?: string): Promi
       const number = db.lastOrderNumber + 1;
       created = {
         ...newOrder,
+        // Quién compra sale de la sesión, no de lo que mande la pantalla.
+        userId: currentUserId(),
         id: createId(),
         number: `MD-${String(number).padStart(4, '0')}`,
         createdAt: new Date().toISOString(),
@@ -91,6 +94,24 @@ export function createOrder(newOrder: NewOrder, replacesOrderId?: string): Promi
 
 export function getOrder(id: string): Promise<Order | null> {
   return simulateRequest(readDb().orders.find((order) => order.id === id) ?? null);
+}
+
+/**
+ * Mis compras (de la sesión actual), de la más nueva a la más vieja. No
+ * incluye los intentos que quedaron cancelados sin cobrarse (ej. al volver
+ * a pagar).
+ */
+export async function getMyOrders(): Promise<Order[]> {
+  const userId = requireUserId();
+  return simulateRequest(
+    readDb()
+      .orders.filter(
+        (order) =>
+          order.userId === userId &&
+          !(order.status === 'cancelled' && order.payment.status !== 'approved'),
+      )
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
+  );
 }
 
 export function findOrderByPreference(preferenceId: string): Promise<Order | null> {

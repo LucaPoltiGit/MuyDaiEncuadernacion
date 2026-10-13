@@ -29,25 +29,25 @@ import type { CheckoutData } from '../../../hooks/useCheckoutData';
 import { formatPrice } from '../../../domain/money';
 import { usePlaceOrder } from '../../../hooks/usePlaceOrder';
 import type { PlaceOrderError } from '../../../hooks/usePlaceOrder';
-import { useSession } from '../../../hooks/useSession';
 import styles from './CheckoutView.module.css';
 
 const text = content.checkout;
 
 export interface CheckoutViewProps {
   data: CheckoutData;
+  /** Datos de la cuenta, si hay sesión: completan "Tus datos". */
+  contact?: Pick<CheckoutForm, 'name' | 'email' | 'phone'>;
 }
 
 /**
  * Checkout en una sola pantalla: datos, entrega y resumen con el pago. Al
  * pagar se crea el pedido y se pasa a Mercado Pago (simulado).
  */
-export function CheckoutView({ data }: CheckoutViewProps) {
-  const session = useSession();
+export function CheckoutView({ data, contact }: CheckoutViewProps) {
   const { placeOrder, placing, error: placeError, clearError } = usePlaceOrder();
   const { items } = useCart();
   const formRef = useRef<HTMLFormElement>(null);
-  const [form, setForm] = useState<CheckoutForm>(emptyCheckoutForm);
+  const [form, setForm] = useState<CheckoutForm>(() => ({ ...emptyCheckoutForm(), ...contact }));
   const [submitted, setSubmitted] = useState(false);
 
   const cart = useMemo(
@@ -151,7 +151,6 @@ export function CheckoutView({ data }: CheckoutViewProps) {
         quote,
         shipping: data.shipping,
         configurator: data.configurator,
-        userId: session.status === 'ready' ? (session.user?.id ?? null) : null,
       }),
     );
   }

@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { SiteHeader } from './SiteHeader';
 import { content } from '../../../content';
+import { login } from '../../../services/authService';
 import { renderWithRouter } from '../../../test/renderWithRouter';
 
 const text = content.layout;
@@ -12,6 +13,18 @@ function getMenuToggle() {
 }
 
 describe('SiteHeader', () => {
+  it('la cuenta dice "Ingresar" sin sesión y "Mi cuenta" con sesión', async () => {
+    const { unmount } = renderWithRouter(<SiteHeader />);
+    expect(await screen.findByRole('link', { name: text.nav.login })).toHaveAttribute(
+      'href',
+      '/mi-cuenta',
+    );
+    unmount();
+    await login('ana@example.com', 'cuadernos');
+    renderWithRouter(<SiteHeader />);
+    expect(await screen.findByRole('link', { name: text.nav.account })).toBeInTheDocument();
+  });
+
   it('el logo lleva al inicio', () => {
     renderWithRouter(<SiteHeader />);
     expect(screen.getByRole('link', { name: text.brandName })).toHaveAttribute('href', '/');

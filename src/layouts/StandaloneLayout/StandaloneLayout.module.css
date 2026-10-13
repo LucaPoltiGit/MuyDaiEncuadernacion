@@ -1,5 +1,8 @@
-/* Fondo propio: se lee como una pasarela aparte del sitio, de la misma familia. */
+/* Fondo propio: se lee como una pantalla aparte, de la misma familia. */
 .page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   min-height: 100svh;
   background-color: var(--color-surface-muted);
   background-image: radial-gradient(var(--color-border) var(--border-width-strong), transparent 0);

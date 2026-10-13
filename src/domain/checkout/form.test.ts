@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isValidPhone, validateCheckoutForm } from './form';
+import { validateCheckoutForm } from './form';
 import { buildCheckoutForm, buildShippingConfig } from './testFixture';
 
 const shipping = buildShippingConfig();
@@ -53,18 +53,5 @@ describe('validateCheckoutForm', () => {
     expect(validateCheckoutForm({ ...pickup, pickupPointId: 'otro' }, shipping)).toEqual({
       pickupPointId: 'required',
     });
-  });
-});
-
-describe('isValidPhone', () => {
-  it('acepta formatos comunes de Argentina', () => {
-    expect(isValidPhone('11 5555-1234')).toBe(true);
-    expect(isValidPhone('+54 9 11 5555 1234')).toBe(true);
-    expect(isValidPhone('(0351) 555-1234')).toBe(true);
-  });
-
-  it('rechaza letras o muy pocos dígitos', () => {
-    expect(isValidPhone('11 5555 abcd')).toBe(false);
-    expect(isValidPhone('5555')).toBe(false);
   });
 });

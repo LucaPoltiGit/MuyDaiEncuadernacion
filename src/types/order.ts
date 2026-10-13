@@ -83,5 +83,8 @@ export interface Order {
   payment: OrderPayment;
 }
 
-/** Lo que arma el checkout; el id, número, fecha y estados los pone el service. */
-export type NewOrder = Omit<Order, 'id' | 'number' | 'createdAt' | 'status' | 'payment'>;
+/**
+ * Lo que arma el checkout. El id, número, fecha, estados y a quién pertenece
+ * (sale de la sesión) los pone el service.
+ */
+export type NewOrder = Omit<Order, 'id' | 'number' | 'createdAt' | 'status' | 'payment' | 'userId'>;
