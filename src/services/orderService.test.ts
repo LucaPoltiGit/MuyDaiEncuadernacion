@@ -25,12 +25,16 @@ function buildNewOrder(overrides: Partial<NewOrder> = {}): NewOrder {
       },
     ],
     subtotal: 20000,
-    discount: { id: 'd-hola', code: 'HOLA', amount: 2000 },
+    discount: { id: 'd-bienvenida', code: 'BIENVENIDA', amount: 2000 },
     delivery: { method: 'pickup', pointId: 'taller', pointName: 'Taller', price: 0 },
     total: 18000,
     estimatedDays: { min: 2, max: 2 },
     ...overrides,
   };
+}
+
+function usesOf(discountId: string) {
+  return readDb().discounts.find((discount) => discount.id === discountId)?.usedCount;
 }
 
 describe('orderService', () => {
@@ -51,7 +55,7 @@ describe('orderService', () => {
       payment: { status: 'approved' },
     });
     expect(readDb().soldProductIds).toEqual(['p-1']);
-    expect(readDb().discountUses).toEqual({ 'd-hola': 1 });
+    expect(usesOf('d-bienvenida')).toBe(1);
   });
 
   it('un pago rechazado no vende nada y se puede reintentar', async () => {
@@ -72,7 +76,7 @@ describe('orderService', () => {
     registerPaymentResult(order.id, 'approved');
     registerPaymentResult(order.id, 'approved');
     registerPaymentResult(order.id, 'rejected');
-    expect(readDb().discountUses).toEqual({ 'd-hola': 1 });
+    expect(usesOf('d-bienvenida')).toBe(1);
     expect((await getOrder(order.id))?.payment.status).toBe('approved');
   });
 

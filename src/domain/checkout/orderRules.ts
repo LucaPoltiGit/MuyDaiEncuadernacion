@@ -20,6 +20,20 @@ export function canTransition(from: OrderStatus, to: OrderStatus) {
 }
 
 /**
+ * Estados a los que el admin puede pasar un pedido. El pago lo marca el
+ * pago (no el admin), y "enviado" o "listo para retirar" dependen de cómo
+ * se entrega.
+ */
+export function nextStatusesFor(order: Pick<Order, 'status' | 'delivery'>): OrderStatus[] {
+  return TRANSITIONS[order.status].filter((status) => {
+    if (status === 'paid') return false;
+    if (status === 'shipped') return order.delivery.method === 'shipping';
+    if (status === 'readyForPickup') return order.delivery.method === 'pickup';
+    return true;
+  });
+}
+
+/**
  * Un pedido esperando el pago reserva sus piezas únicas por un rato, para
  * que nadie más las compre mientras se paga. Un pago rechazado libera la
  * reserva (al reintentar, se vuelve a pedir).

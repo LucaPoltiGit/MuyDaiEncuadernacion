@@ -1,5 +1,4 @@
 import { RESERVATION_MINUTES } from '../constants/shop';
-import { discountsMock } from '../data/mock/discounts';
 import {
   blockedProductIds,
   canTransition,
@@ -46,9 +45,9 @@ function blockedFor(db: MockDb, exceptOrderId?: string) {
 }
 
 function discountHasUses(db: MockDb, discountId: string) {
-  const discount = discountsMock.find((candidate) => candidate.id === discountId);
+  const discount = db.discounts.find((candidate) => candidate.id === discountId);
   if (!discount || discount.maxUses === null) return true;
-  return discount.usedCount + (db.discountUses[discountId] ?? 0) < discount.maxUses;
+  return discount.usedCount < discount.maxUses;
 }
 
 function cancelIfPending(order: Order): Order {
@@ -185,13 +184,14 @@ export function registerPaymentResult(orderId: string, status: PaymentStatus) {
       soldProductIds: canBePaid
         ? [...new Set([...db.soldProductIds, ...productIds])]
         : db.soldProductIds,
-      discountUses:
+      discounts:
         canBePaid && order.discount
-          ? {
-              ...db.discountUses,
-              [order.discount.id]: (db.discountUses[order.discount.id] ?? 0) + 1,
-            }
-          : db.discountUses,
+          ? db.discounts.map((discount) =>
+              discount.id === order.discount?.id
+                ? { ...discount, usedCount: discount.usedCount + 1 }
+                : discount,
+            )
+          : db.discounts,
     };
   });
 }

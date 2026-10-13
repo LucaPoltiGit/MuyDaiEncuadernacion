@@ -1,13 +1,23 @@
+import { catalogMock } from '../data/mock/catalog';
+import { configuratorMock } from '../data/mock/configurator';
+import { discountsMock } from '../data/mock/discounts';
+import { shippingMock } from '../data/mock/shipping';
+import { testimonialsMock } from '../data/mock/testimonials';
 import { usersMock } from '../data/mock/users';
 import type { StoredUser } from '../data/mock/users';
+import type { CatalogData } from '../types/catalog';
 import type { SavedDesign } from '../types/design';
+import type { DiscountCode } from '../types/discount';
+import type { ConfiguratorData } from '../types/notebook';
 import type { Order } from '../types/order';
+import type { ShippingConfig } from '../types/shipping';
+import type { Testimonial } from '../types/testimonial';
 
 /**
  * "Base de datos" simulada en el navegador: lo que en producción guardaría
- * el backend (usuarios, pedidos, diseños, piezas vendidas, usos de
- * códigos). Solo la usan los services; cuando haya API, este archivo
- * desaparece.
+ * el backend. Lo editable por el admin (configurador, tienda, códigos,
+ * envíos, testimonios) arranca con los datos de `data/mock` y después vive
+ * acá. Solo la usan los services; cuando haya API, este archivo desaparece.
  */
 export interface MockDb {
   /** Versión de la forma de la base: si cambia, se migra al leer. */
@@ -15,40 +25,42 @@ export interface MockDb {
   users: StoredUser[];
   orders: Order[];
   designs: SavedDesign[];
+  configurator: ConfiguratorData;
+  catalog: CatalogData;
+  discounts: DiscountCode[];
+  shipping: ShippingConfig;
+  testimonials: Testimonial[];
   /** Productos de la tienda vendidos (son piezas únicas). */
   soldProductIds: string[];
-  /** Veces que se usó cada código de descuento, por id. */
-  discountUses: Record<string, number>;
   lastOrderNumber: number;
 }
 
 const DB_KEY = 'muydai:mockdb:v1';
 
 /**
- * Subirla cuando cambie la forma de los datos o las semillas del mock (ej.
- * nuevos usuarios de prueba): al leer una base vieja se re-siembra lo que
- * viene del mock y se conserva lo creado en el navegador.
+ * Subirla cuando cambie la forma de los datos o las semillas de usuarios:
+ * al leer una base vieja se completan las colecciones nuevas, se
+ * re-siembran los usuarios de prueba y se conserva lo creado en el navegador.
  */
-const SCHEMA_VERSION = 2;
+const SCHEMA_VERSION = 3;
 
-/** Base inicial: los usuarios de prueba del mock y nada más. */
+/** Base inicial: todo lo del mock y nada más. */
 function emptyDb(): MockDb {
   return {
     schemaVersion: SCHEMA_VERSION,
     users: structuredClone(usersMock),
     orders: [],
     designs: [],
+    configurator: structuredClone(configuratorMock),
+    catalog: structuredClone(catalogMock),
+    discounts: structuredClone(discountsMock),
+    shipping: structuredClone(shippingMock),
+    testimonials: structuredClone(testimonialsMock),
     soldProductIds: [],
-    discountUses: {},
     lastOrderNumber: 0,
   };
 }
 
-/**
- * Completa las colecciones que falten y, si la versión es vieja, actualiza
- * las semillas: los usuarios del mock se reemplazan (mismo id) y los
- * registrados en el navegador se conservan.
- */
 function migrate(stored: Partial<MockDb>): MockDb {
   const base = emptyDb();
   const merged: MockDb = { ...base, ...stored, schemaVersion: SCHEMA_VERSION };

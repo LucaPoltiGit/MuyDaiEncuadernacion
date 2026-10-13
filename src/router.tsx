@@ -1,10 +1,12 @@
 import type { RouteObject } from 'react-router';
 import { AccountLayout } from './layouts/AccountLayout/AccountLayout';
+import { AdminLayout } from './layouts/AdminLayout/AdminLayout';
 import { RequireRole } from './layouts/RequireRole/RequireRole';
 import { StandaloneLayout } from './layouts/StandaloneLayout/StandaloneLayout';
 import { StoreLayout } from './layouts/StoreLayout/StoreLayout';
 import { AccountDesignsPage } from './pages/AccountDesignsPage/AccountDesignsPage';
 import { AccountOrdersPage } from './pages/AccountOrdersPage/AccountOrdersPage';
+import { AdminOrdersPage } from './pages/admin/AdminOrdersPage/AdminOrdersPage';
 import { CartPage } from './pages/CartPage/CartPage';
 import { CatalogPage } from './pages/CatalogPage/CatalogPage';
 import { CheckoutPage } from './pages/CheckoutPage/CheckoutPage';
@@ -106,11 +108,29 @@ export const routes: RouteObject[] = [
   {
     element: <StandaloneLayout />,
     errorElement: <RouteErrorPage />,
+    children: [{ path: ROUTES.paymentSimulator, element: <PaymentSimulatorPage /> }],
+  },
+  // Panel: solo rol admin, con su propio layout.
+  {
+    element: <RequireRole requiredRole="admin" standalone />,
+    errorElement: <RouteErrorPage />,
     children: [
-      { path: ROUTES.paymentSimulator, element: <PaymentSimulatorPage /> },
       {
-        element: <RequireRole requiredRole="admin" />,
-        children: [{ path: ROUTES.admin, element: <ComingSoonPage pageKey="admin" /> }],
+        element: <AdminLayout />,
+        children: [
+          { path: ROUTES.admin, element: <AdminOrdersPage /> },
+          { path: ROUTES.adminProducts, element: <ComingSoonPage pageKey="adminProducts" /> },
+          {
+            path: ROUTES.adminConfigurator,
+            element: <ComingSoonPage pageKey="adminConfigurator" />,
+          },
+          { path: ROUTES.adminShipping, element: <ComingSoonPage pageKey="adminShipping" /> },
+          { path: ROUTES.adminDiscounts, element: <ComingSoonPage pageKey="adminDiscounts" /> },
+          {
+            path: ROUTES.adminTestimonials,
+            element: <ComingSoonPage pageKey="adminTestimonials" />,
+          },
+        ],
       },
     ],
   },

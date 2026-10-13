@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { blockedProductIds, canTransition, conflictingProductIds, isReserving } from './orderRules';
+import {
+  blockedProductIds,
+  canTransition,
+  conflictingProductIds,
+  isReserving,
+  nextStatusesFor,
+} from './orderRules';
 import { buildOrder } from './testFixture';
 
 const now = new Date('2026-10-12T12:10:00.000Z');
@@ -17,6 +23,40 @@ describe('canTransition', () => {
   it('no se puede saltar del pago pendiente a enviado ni volver atrás', () => {
     expect(canTransition('pendingPayment', 'shipped')).toBe(false);
     expect(canTransition('delivered', 'shipped')).toBe(false);
+  });
+});
+
+describe('nextStatusesFor', () => {
+  it('un pedido pagado para retirar pasa a producción, a listo para retirar o se cancela', () => {
+    expect(nextStatusesFor(buildOrder({ status: 'paid' }))).toEqual([
+      'inProduction',
+      'readyForPickup',
+      'cancelled',
+    ]);
+  });
+
+  it('con envío, ofrece "enviado" y no "listo para retirar"', () => {
+    const order = buildOrder({
+      status: 'inProduction',
+      delivery: {
+        method: 'shipping',
+        zoneId: 'caba',
+        zoneName: 'CABA',
+        price: 3500,
+        address: {
+          street: 'X 1',
+          apartment: '',
+          city: 'CABA',
+          province: 'CABA',
+          postalCode: '1414',
+        },
+      },
+    });
+    expect(nextStatusesFor(order)).toEqual(['shipped', 'cancelled']);
+  });
+
+  it('el pago no lo marca el admin: un pedido sin pagar solo se puede cancelar', () => {
+    expect(nextStatusesFor(buildOrder())).toEqual(['cancelled']);
   });
 });
 

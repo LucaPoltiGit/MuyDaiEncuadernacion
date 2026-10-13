@@ -180,6 +180,10 @@
   --measure-narrow: 24rem;
   /* Ancho de las tarjetas de ingreso y registro. */
   --measure-form: 28rem;
+  /* Columna de secciones del panel (desktop). */
+  --admin-nav-width: 15rem;
+  /* Alto mínimo de un campo de texto largo (unas 4 líneas). */
+  --textarea-min-height: 7rem;
   --measure-text: 40rem;
   --header-height: 4rem;
   --bottom-bar-height: 5.25rem;

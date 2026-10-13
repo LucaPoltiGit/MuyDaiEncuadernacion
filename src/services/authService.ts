@@ -95,6 +95,21 @@ export function requireUserId(): string {
   return userId;
 }
 
+/** La sesión no tiene permiso para esta operación. */
+export class ForbiddenError extends Error {
+  constructor() {
+    super('No tenés permiso para hacer esto.');
+  }
+}
+
+/** Para los services del panel: solo el rol admin puede leer o cambiar estos datos. */
+export function requireAdmin(): string {
+  const user = sessionUser();
+  if (!user) throw new NotAuthenticatedError();
+  if (user.role !== 'admin') throw new ForbiddenError();
+  return user.id;
+}
+
 /** Clave de la sesión: el `SessionProvider` escucha sus cambios para sincronizar pestañas. */
 export const SESSION_STORAGE_KEY = SESSION_KEY;
 

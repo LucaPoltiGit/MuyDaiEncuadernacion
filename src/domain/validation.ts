@@ -17,3 +17,18 @@ export function isValidPhone(phone: string) {
   const digits = phone.replace(/\D/g, '');
   return digits.length >= 8 && digits.length <= 13;
 }
+
+/**
+ * Teléfono argentino en el formato que pide WhatsApp (wa.me): 549 +
+ * característica + número, sin 0 ni 15. Ej: "011 15-5555-1234" → "5491155551234".
+ * Es una aproximación: con números raros, WhatsApp igual deja corregirlo.
+ */
+export function toWhatsappNumber(phone: string) {
+  let digits = phone.replace(/\D/g, '');
+  if (digits.startsWith('549')) return digits;
+  if (digits.startsWith('54')) digits = digits.slice(2);
+  if (digits.startsWith('0')) digits = digits.slice(1);
+  // "11 15 5555 1234": el 15 después de la característica no va.
+  digits = digits.replace(/^(\d{2,4})15(\d{6,8})$/, '$1$2');
+  return `549${digits}`;
+}

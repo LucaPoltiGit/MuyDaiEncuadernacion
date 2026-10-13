@@ -1,4 +1,5 @@
 import { account, auth } from './account';
+import { admin } from './admin';
 import { checkout } from './checkout';
 import { configurator } from './configurator';
 import { layout } from './layout';
@@ -9,6 +10,7 @@ import { styleGuide } from './styleGuide';
 /** Todos los textos en español, agrupados por página o sección. */
 export const es = {
   account,
+  admin,
   auth,
   cart,
   catalog,

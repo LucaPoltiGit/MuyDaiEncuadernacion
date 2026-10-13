@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isValidEmail, isValidPhone, normalizeEmail } from './validation';
+import { isValidEmail, isValidPhone, normalizeEmail, toWhatsappNumber } from './validation';
 
 describe('isValidEmail', () => {
   it('acepta emails comunes y rechaza incompletos', () => {
@@ -25,5 +25,14 @@ describe('isValidPhone', () => {
   it('rechaza letras o muy pocos dígitos', () => {
     expect(isValidPhone('11 5555 abcd')).toBe(false);
     expect(isValidPhone('5555')).toBe(false);
+  });
+});
+
+describe('toWhatsappNumber', () => {
+  it('lleva los formatos comunes al de WhatsApp', () => {
+    expect(toWhatsappNumber('11 5555 1234')).toBe('5491155551234');
+    expect(toWhatsappNumber('011 15-5555-1234')).toBe('5491155551234');
+    expect(toWhatsappNumber('+54 9 11 5555 1234')).toBe('5491155551234');
+    expect(toWhatsappNumber('(0351) 155-551234')).toBe('5493515551234');
   });
 });
