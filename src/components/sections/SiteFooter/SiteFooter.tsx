@@ -83,9 +83,17 @@ export function SiteFooter() {
 
         <div className={styles.legal}>
           <p>{text.footer.copyright(year)}</p>
-          <a href={CONSUMER_DEFENSE_URL} target="_blank" rel="noreferrer">
-            {text.footer.consumerDefense}
-          </a>
+          {/* Res. 424/2020: link con este nombre exacto, de fácil acceso. */}
+          <ul className={styles.legalLinks}>
+            <li>
+              <Link to={ROUTES.withdrawal}>{text.footer.withdrawal}</Link>
+            </li>
+            <li>
+              <a href={CONSUMER_DEFENSE_URL} target="_blank" rel="noreferrer">
+                {text.footer.consumerDefense}
+              </a>
+            </li>
+          </ul>
         </div>
       </footer>
     </>
