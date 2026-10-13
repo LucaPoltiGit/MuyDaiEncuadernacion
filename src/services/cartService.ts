@@ -1,3 +1,4 @@
+import { isNotebookConfiguration } from '../domain/notebook/guards';
 import type { CartItem } from '../types/cart';
 
 /**
@@ -10,18 +11,13 @@ const STORAGE_KEY = 'muydai:cart:v1';
 function isCartItem(value: unknown): value is CartItem {
   if (typeof value !== 'object' || value === null) return false;
   const item = value as Record<string, unknown>;
-  const configuration = item.configuration as Record<string, unknown> | undefined;
   return (
     typeof item.id === 'string' &&
     (item.kind === 'custom' || (item.kind === 'product' && typeof item.productId === 'string')) &&
     typeof item.quantity === 'number' &&
     item.quantity > 0 &&
     typeof item.priceAtAdd === 'number' &&
-    typeof configuration === 'object' &&
-    configuration !== null &&
-    typeof configuration.sizeId === 'string' &&
-    typeof configuration.sheets === 'number' &&
-    typeof configuration.coverText === 'string'
+    isNotebookConfiguration(item.configuration)
   );
 }
 
@@ -41,5 +37,26 @@ export function saveCartItems(items: CartItem[]) {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   } catch {
     // Si no se puede guardar, el carrito sigue funcionando en memoria.
+  }
+}
+
+const DISCOUNT_KEY = 'muydai:cart-discount:v1';
+
+/** Código de descuento aplicado al carrito (solo el texto: se revalida siempre). */
+export function loadDiscountCode(): string | null {
+  try {
+    const raw = window.localStorage.getItem(DISCOUNT_KEY);
+    return raw && raw.trim() ? raw : null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveDiscountCode(code: string | null) {
+  try {
+    if (code) window.localStorage.setItem(DISCOUNT_KEY, code);
+    else window.localStorage.removeItem(DISCOUNT_KEY);
+  } catch {
+    // Sin almacenamiento, el código vale solo mientras dure la visita.
   }
 }

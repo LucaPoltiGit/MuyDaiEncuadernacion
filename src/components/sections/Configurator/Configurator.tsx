@@ -9,6 +9,7 @@ import { SizeComparison } from '../../ui/SizeComparison/SizeComparison';
 import { Stepper } from '../../ui/Stepper/Stepper';
 import { Switch } from '../../ui/Switch/Switch';
 import { ConfiguratorBar, ConfiguratorExtras } from './ConfiguratorSummary';
+import { PageIntro } from '../PageIntro/PageIntro';
 import { content } from '../../../content';
 import { hasCoverText } from '../../../domain/notebook/restrictions';
 import type { Adjustment, UnavailableReason } from '../../../domain/notebook/restrictions';
@@ -120,14 +121,12 @@ export function Configurator({ data, initialConfiguration }: ConfiguratorProps) 
 
   return (
     <div className={styles.configurator}>
-      <header className={styles.intro}>
-        <p className={styles.eyebrow}>
-          <Flower size="xs" />
-          {text.eyebrow}
-        </p>
-        <h1 className={styles.title}>{text.title}</h1>
-        <p className={styles.lead}>{text.intro}</p>
-      </header>
+      <PageIntro
+        eyebrow={text.eyebrow}
+        title={text.title}
+        lead={text.intro}
+        className={styles.intro}
+      />
 
       <div className={styles.layout}>
         <div className={styles.previewColumn}>

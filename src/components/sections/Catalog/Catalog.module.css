@@ -1,0 +1,113 @@
+.catalog {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-6) var(--space-4) var(--space-12);
+}
+
+.filters {
+  margin-top: var(--space-6);
+}
+
+.count {
+  margin-block: var(--space-4);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.empty {
+  margin-bottom: var(--space-6);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4) var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.grid > li {
+  display: flex;
+}
+
+.grid > li > * {
+  flex: 1;
+}
+
+/* La invitación al configurador ocupa todo el ancho en mobile. */
+.customItem {
+  grid-column: 1 / -1;
+}
+
+.customCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-5);
+  border: var(--border-stitch-width) dashed var(--color-stitch);
+  border-radius: var(--radius-card);
+  background-color: var(--color-action-soft);
+}
+
+.customTitle {
+  font-size: var(--font-size-xl);
+  font-variation-settings: var(--font-variation-display-playful);
+}
+
+.customCard > :not(.customButterfly) {
+  position: relative;
+}
+
+/* Sale volando por la esquina, cruzando la costura; el título le deja lugar. */
+.customButterfly {
+  position: absolute;
+  top: calc(var(--butterfly-size-lg) / -2.5);
+  right: calc(var(--space-2) * -1);
+  transform: rotate(12deg);
+}
+
+.customTitle {
+  padding-right: calc(var(--butterfly-size-lg) / 2);
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Banda horizontal: título y texto a la izquierda, botón a la derecha. */
+  .customCard {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    column-gap: var(--space-8);
+    align-items: center;
+    padding: var(--space-8) var(--space-10);
+  }
+
+  .customCard > a {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .customTitle {
+    font-size: var(--font-size-2xl);
+  }
+
+  .catalog {
+    padding: var(--space-10) var(--space-8) var(--space-16);
+  }
+
+  .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-8) var(--space-6);
+  }
+}

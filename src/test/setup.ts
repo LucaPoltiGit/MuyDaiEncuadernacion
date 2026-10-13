@@ -9,6 +9,8 @@ import { afterEach } from 'vitest';
 // automática: se desmonta a mano lo renderizado después de cada test.
 afterEach(() => {
   cleanup();
+  // El carrito se guarda en localStorage: cada test arranca con uno vacío.
+  window.localStorage.clear();
 });
 
 // jsdom no implementa scroll; `ScrollRestoration` del router lo llama al navegar.

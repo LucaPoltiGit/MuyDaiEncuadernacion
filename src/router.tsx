@@ -1,8 +1,11 @@
 import type { RouteObject } from 'react-router';
 import { StoreLayout } from './layouts/StoreLayout/StoreLayout';
+import { CartPage } from './pages/CartPage/CartPage';
+import { CatalogPage } from './pages/CatalogPage/CatalogPage';
 import { ComingSoonPage } from './pages/ComingSoonPage/ComingSoonPage';
 import { ConfiguratorPage } from './pages/ConfiguratorPage/ConfiguratorPage';
 import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage';
+import { ProductPage } from './pages/ProductPage/ProductPage';
 import { RouteErrorPage } from './pages/RouteErrorPage/RouteErrorPage';
 import { StyleGuidePage } from './pages/StyleGuidePage/StyleGuidePage';
 import { ROUTES } from './constants/routes';
@@ -23,11 +26,12 @@ export const routes: RouteObject[] = [
     children: [
       // Tienda pública
       { index: true, element: <ComingSoonPage pageKey="home" /> },
-      { path: ROUTES.catalog, element: <ComingSoonPage pageKey="catalog" /> },
+      { path: ROUTES.catalog, element: <CatalogPage /> },
       {
         path: ROUTES.product,
-        element: <ComingSoonPage pageKey="product" />,
-        handle: { layout: { bottomBar: true } } satisfies RouteHandle,
+        element: <ProductPage />,
+        // Como en el configurador: WhatsApp competiría con la barra de compra.
+        handle: { layout: { bottomBar: true, hideWhatsApp: true } } satisfies RouteHandle,
       },
       {
         path: ROUTES.configurator,
@@ -40,7 +44,12 @@ export const routes: RouteObject[] = [
       { path: ROUTES.testimonials, element: <ComingSoonPage pageKey="testimonials" /> },
       { path: ROUTES.about, element: <ComingSoonPage pageKey="about" /> },
       { path: ROUTES.faq, element: <ComingSoonPage pageKey="faq" /> },
-      { path: ROUTES.cart, element: <ComingSoonPage pageKey="cart" /> },
+      {
+        path: ROUTES.cart,
+        element: <CartPage />,
+        // WhatsApp tapaba precios y "Seguir comprando" en mobile.
+        handle: { layout: { hideWhatsApp: true } } satisfies RouteHandle,
+      },
       {
         path: ROUTES.checkout,
         element: <ComingSoonPage pageKey="checkout" />,

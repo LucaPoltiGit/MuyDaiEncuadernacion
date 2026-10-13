@@ -9,7 +9,7 @@
 
 /* La flor gira mientras carga; quieta si la persona prefiere menos movimiento. */
 .spinner {
-  animation: spin 2.4s linear infinite;
+  animation: spin var(--duration-spin) linear infinite;
 }
 
 @keyframes spin {

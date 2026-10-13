@@ -1,0 +1,174 @@
+.detail {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-4) var(--space-4) var(--space-12);
+}
+
+/* Miga de pan: "Tienda / Cuaderno Jardín". */
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  list-style: none;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.breadcrumb li + li::before {
+  content: '/';
+  margin-right: var(--space-2);
+  color: var(--color-border-strong);
+}
+
+.breadcrumb a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target-min);
+  margin-block: calc(var(--space-3) * -1);
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* Mesa de trabajo con puntitos, igual que el configurador. */
+.figure {
+  position: relative;
+  aspect-ratio: 1;
+  max-height: 60svh;
+  margin-inline: auto;
+  width: 100%;
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background-color: var(--color-surface-muted);
+  background-image: radial-gradient(var(--color-border) var(--border-width-strong), transparent 0);
+  background-size: var(--space-4) var(--space-4);
+}
+
+/* Sale volando de la mesa, cruzando el borde. */
+.butterfly {
+  position: absolute;
+  z-index: 1;
+  top: calc(var(--butterfly-size-lg) / -3);
+  right: calc(var(--space-2) * -1);
+  transform: rotate(-10deg);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-link);
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+}
+
+.tagline {
+  color: var(--color-text-muted);
+}
+
+.stock {
+  margin: 0;
+}
+
+.status {
+  padding-top: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.status:empty {
+  display: none;
+}
+
+.description {
+  max-width: var(--measure-text);
+}
+
+.sectionTitle {
+  margin-bottom: var(--space-3);
+  font-size: var(--font-size-lg);
+}
+
+.customize {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border: var(--border-stitch-width) dashed var(--color-stitch);
+  border-radius: var(--radius-card);
+  background-color: var(--color-action-soft);
+}
+
+.customize .sectionTitle {
+  margin-bottom: 0;
+  font-variation-settings: var(--font-variation-display-playful);
+}
+
+@media (min-width: 1024px) {
+  .detail {
+    padding: var(--space-8) var(--space-8) var(--space-16);
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    align-items: start;
+    gap: var(--space-12);
+  }
+
+  .figureColumn {
+    position: sticky;
+    top: var(--space-6);
+  }
+
+  .figure {
+    max-height: none;
+    padding: var(--space-8);
+  }
+
+  .title {
+    font-size: var(--font-size-3xl);
+  }
+
+  /* En desktop la barra de compra es una tarjeta con costura. */
+  .purchase {
+    position: relative;
+    padding: var(--space-6);
+    border-radius: var(--radius-card);
+    background-color: var(--color-surface);
+  }
+
+  .purchase::after {
+    content: '';
+    position: absolute;
+    inset: var(--border-stitch-gap);
+    border: var(--border-stitch-width) dashed var(--color-stitch);
+    border-radius: calc(var(--radius-card) - var(--border-stitch-gap));
+    pointer-events: none;
+  }
+}

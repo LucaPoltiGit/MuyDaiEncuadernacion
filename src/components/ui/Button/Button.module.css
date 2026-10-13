@@ -20,7 +20,10 @@
     transform var(--transition-fast);
 }
 
-.button:disabled {
+/* aria-disabled: se ve deshabilitado pero sigue recibiendo foco (ej. para
+   que un lector de pantalla llegue al motivo). */
+.button:disabled,
+.button[aria-disabled='true'] {
   background-color: var(--color-disabled-bg);
   border-color: var(--color-border);
   color: var(--color-disabled-text);
@@ -37,7 +40,7 @@
   box-shadow: var(--shadow-sticker);
 }
 
-.primary:hover:not(:disabled) {
+.primary:hover:not(:disabled):not([aria-disabled='true']) {
   background-color: var(--color-action-hover);
   transform: translate(
     calc(var(--shadow-sticker-offset) / -3),
@@ -47,7 +50,7 @@
     0 var(--color-text);
 }
 
-.primary:active:not(:disabled) {
+.primary:active:not(:disabled):not([aria-disabled='true']) {
   transform: translate(var(--shadow-sticker-offset), var(--shadow-sticker-offset));
   box-shadow: none;
 }
@@ -58,7 +61,7 @@
   color: var(--color-text);
 }
 
-.secondary:hover:not(:disabled) {
+.secondary:hover:not(:disabled):not([aria-disabled='true']) {
   background-color: var(--color-action-soft);
 }
 
@@ -69,11 +72,12 @@
   text-underline-offset: 0.2em;
 }
 
-.ghost:hover:not(:disabled) {
+.ghost:hover:not(:disabled):not([aria-disabled='true']) {
   color: var(--color-link-hover);
 }
 
-.ghost:disabled {
+.ghost:disabled,
+.ghost[aria-disabled='true'] {
   background-color: transparent;
   border-color: transparent;
 }
@@ -85,7 +89,7 @@
   color: var(--color-on-dark);
 }
 
-.inverse:hover:not(:disabled) {
+.inverse:hover:not(:disabled):not([aria-disabled='true']) {
   background-color: var(--color-on-dark);
   color: var(--color-text);
 }

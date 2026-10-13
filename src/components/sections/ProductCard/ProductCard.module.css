@@ -1,0 +1,116 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-card);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+/* Toda la tarjeta es clickeable; el foco del link se dibuja alrededor de la
+   tarjeta entera (mismo estilo que el foco global). */
+.card:has(.link:hover) {
+  transform: translateY(calc(var(--space-1) * -1)) rotate(-0.6deg);
+  box-shadow: var(--shadow-sticker);
+}
+
+.card:has(.link:focus-visible) {
+  outline: var(--border-width-strong) solid var(--color-focus-ring);
+  outline-offset: var(--border-width-strong);
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+/* Mesa de trabajo con puntitos, como en el configurador. */
+.figure {
+  aspect-ratio: 1;
+  padding: var(--space-3);
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  background-color: var(--color-surface-muted);
+  background-image: radial-gradient(var(--color-border) var(--border-width-strong), transparent 0);
+  background-size: var(--space-4) var(--space-4);
+}
+
+.wave {
+  /* Se apoya sobre el borde de la mesa, sin dejar una línea entre medio. */
+  margin-top: calc(var(--border-width) * -1);
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3) var(--space-4);
+}
+
+.name {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-tight);
+}
+
+.link {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-card);
+}
+
+.tagline {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-top: auto;
+  padding-top: var(--space-1);
+}
+
+.price {
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.soldOut .wave {
+  opacity: 0.55;
+}
+
+.soldOut .figure {
+  opacity: 0.55;
+  filter: grayscale(0.6);
+}
+
+@media (min-width: 640px) {
+  .figure {
+    padding: var(--space-5);
+  }
+
+  .body {
+    padding: var(--space-2) var(--space-5) var(--space-5);
+  }
+
+  .name {
+    font-size: var(--font-size-lg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:has(.link:hover) {
+    transform: none;
+  }
+}

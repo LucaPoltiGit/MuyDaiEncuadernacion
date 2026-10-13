@@ -1,0 +1,12 @@
+/* Campo y botón en la misma fila; el error ocupa el ancho del campo. */
+.form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--space-2);
+}
+
+/* El botón se alinea con el campo, no con el rótulo de arriba. */
+.apply {
+  margin-top: calc(var(--font-size-base) * var(--line-height-base) + var(--space-2));
+}
