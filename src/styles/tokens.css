@@ -196,6 +196,10 @@
   /* Dibujo de cada cuaderno en el carrito. */
   --cart-thumb-size: 6rem;
   --cart-thumb-size-desktop: 9.5rem;
+  /* Círculo con costura de los pasos numerados (checkout, "Qué sigue"). */
+  --step-marker-size: 2.25rem;
+  /* Miniatura de cada cuaderno en el resumen del checkout. */
+  --checkout-thumb-size: 3rem;
   /* Columna de precio fija desde tablet: así "Quitar" queda alineado en todas las filas. */
   --cart-price-width: 8rem;
   --butterfly-size-sm: 1.75rem;

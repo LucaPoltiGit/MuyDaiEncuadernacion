@@ -16,6 +16,8 @@ export const pages = {
       faq: 'Preguntas frecuentes',
       cart: 'Carrito',
       checkout: 'Finalizar compra',
+      paymentSimulator: 'Pago de prueba',
+      checkoutResult: 'Resultado del pago',
       login: 'Ingresar',
       register: 'Crear cuenta',
       account: 'Mi cuenta',

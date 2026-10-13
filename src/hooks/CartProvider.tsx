@@ -49,6 +49,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setItems((current) => current.filter((item) => item.id !== id));
   }, []);
 
+  const clear = useCallback(() => {
+    setItems([]);
+    setDiscountCode(null);
+  }, []);
+
   const value = useMemo(
     () => ({
       items,
@@ -56,10 +61,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
       contains,
       addItem,
       removeItem,
+      clear,
       discountCode,
       setDiscountCode,
     }),
-    [items, contains, addItem, removeItem, discountCode],
+    [items, contains, addItem, removeItem, clear, discountCode],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

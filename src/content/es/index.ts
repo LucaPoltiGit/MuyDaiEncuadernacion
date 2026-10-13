@@ -1,3 +1,4 @@
+import { checkout } from './checkout';
 import { configurator } from './configurator';
 import { layout } from './layout';
 import { pages } from './pages';
@@ -8,6 +9,7 @@ import { styleGuide } from './styleGuide';
 export const es = {
   cart,
   catalog,
+  checkout,
   configurator,
   layout,
   notebook,
