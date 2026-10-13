@@ -57,3 +57,18 @@
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
 }
+
+/* Tamaño chico: mismo área táctil, menos protagonismo. */
+.sm {
+  gap: var(--space-1);
+}
+
+.sm .label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+}
+
+.sm .value {
+  min-width: var(--space-8);
+}

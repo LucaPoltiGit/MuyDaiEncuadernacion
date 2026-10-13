@@ -20,8 +20,11 @@ export interface OptionGroupProps {
   options: OptionGroupOption[];
   value: string | null;
   onChange: (value: string) => void;
-  /** `chips` para opciones cortas, `list` para opciones con descripción larga, `swatches` para muestras visuales. */
-  layout?: 'chips' | 'list' | 'swatches';
+  /**
+   * `chips` para opciones cortas, `list` para opciones con descripción larga,
+   * `swatches` para muestras visuales, `pills` para filtros (compactas, en fila).
+   */
+  layout?: 'chips' | 'list' | 'swatches' | 'pills';
   hint?: string;
 }
 

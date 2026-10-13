@@ -1,0 +1,85 @@
+/* Mobile: fija abajo, con costura arriba. */
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-bottom-bar);
+  padding: var(--space-3) var(--space-4) calc(var(--space-3) + env(safe-area-inset-bottom));
+  background-color: var(--color-bg);
+  border-top: var(--border-stitch-width) dashed var(--color-stitch);
+  box-shadow: var(--shadow-md);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: calc(var(--bottom-bar-height) - var(--space-6));
+}
+
+.priceBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+/* En la barra mobile no hay lugar para el rótulo: queda para lectores de pantalla. */
+.priceLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.price {
+  font-family: var(--font-family-display);
+  font-variation-settings: var(--font-variation-display);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--line-height-tight);
+}
+
+.detail {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.action {
+  flex-shrink: 0;
+}
+
+@media (min-width: 1024px) {
+  .bar {
+    position: static;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  .inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-4);
+  }
+
+  .priceLabel {
+    position: static;
+    width: auto;
+    height: auto;
+    clip: auto;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .price {
+    font-size: var(--font-size-3xl);
+  }
+
+  .action > * {
+    width: 100%;
+  }
+}

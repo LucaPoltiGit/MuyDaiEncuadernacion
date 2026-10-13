@@ -150,3 +150,21 @@
   font-weight: var(--font-weight-bold);
   color: var(--color-text);
 }
+
+/* Píldoras: filtros compactos que fluyen en fila (ej. categorías del catálogo). */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pills .card {
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-button);
+  white-space: nowrap;
+}
+
+.pills .radio:checked + .card {
+  padding: calc(var(--space-2) - var(--border-width)) calc(var(--space-4) - var(--border-width));
+  background-color: var(--color-action-soft);
+}

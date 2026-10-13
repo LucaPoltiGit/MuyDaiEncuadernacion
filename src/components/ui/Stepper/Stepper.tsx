@@ -13,6 +13,8 @@ export interface StepperProps {
   decrementLabel: string;
   incrementLabel: string;
   hint?: string;
+  /** `sm` para listas (ej. cantidad en el carrito): rótulo chico y valor angosto. */
+  size?: 'md' | 'sm';
 }
 
 /** Selector numérico con botones − y +, en pasos fijos. */
@@ -27,6 +29,7 @@ export function Stepper({
   decrementLabel,
   incrementLabel,
   hint,
+  size = 'md',
 }: StepperProps) {
   const id = useId();
   const labelId = `${id}-label`;
@@ -37,7 +40,7 @@ export function Stepper({
       role="group"
       aria-labelledby={labelId}
       aria-describedby={hint ? hintId : undefined}
-      className={styles.group}
+      className={[styles.group, size === 'sm' ? styles.sm : ''].filter(Boolean).join(' ')}
     >
       <p id={labelId} className={styles.label}>
         {label}

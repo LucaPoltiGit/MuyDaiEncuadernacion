@@ -1,0 +1,111 @@
+.line {
+  display: grid;
+  grid-template-columns: var(--cart-thumb-size) minmax(0, 1fr) auto;
+  grid-template-areas: 'thumb content price';
+  gap: var(--space-3);
+  padding-block: var(--space-5);
+  border-bottom: var(--border-stitch-width) dashed var(--color-stitch);
+}
+
+.thumb {
+  grid-area: thumb;
+  aspect-ratio: 1;
+  padding: var(--space-1);
+  border-radius: var(--radius-card);
+  background-color: var(--color-surface-muted);
+  background-image: radial-gradient(var(--color-border) var(--border-width-strong), transparent 0);
+  background-size: var(--space-3) var(--space-3);
+}
+
+.content {
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.name {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-tight);
+}
+
+.name a {
+  color: var(--color-text);
+}
+
+.summary,
+.note {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* Problema: fondo de aviso + texto oscuro (contraste AA), no solo color. */
+.problem {
+  margin-top: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-control);
+  background-color: var(--color-warning-soft);
+  color: var(--color-warning);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.withProblem .thumb {
+  opacity: 0.6;
+}
+
+.withProblem .subtotal {
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-muted);
+}
+
+.excluded {
+  display: block;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.problem:focus-visible {
+  outline-offset: var(--border-width-strong);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-2) var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.price {
+  grid-area: price;
+  text-align: right;
+}
+
+.subtotal {
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.unit {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .line {
+    grid-template-columns: var(--cart-thumb-size-desktop) minmax(0, 1fr) var(--cart-price-width);
+    gap: var(--space-5);
+  }
+
+  .name {
+    font-size: var(--font-size-lg);
+  }
+}
+
+/* "Quitar" siempre en el mismo lugar: al final de la fila de controles. */
+.controls > :last-child {
+  margin-left: auto;
+}

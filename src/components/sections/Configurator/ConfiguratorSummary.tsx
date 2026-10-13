@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { Button } from '../../ui/Button/Button';
 import { buttonClassName } from '../../ui/Button/buttonClassName';
+import { PurchaseBar } from '../../ui/PurchaseBar/PurchaseBar';
 import { ROUTES } from '../../../constants/routes';
 import { content } from '../../../content';
 import { formatPrice } from '../../../domain/money';
@@ -69,39 +70,42 @@ export function ConfiguratorBar({
   }
 
   return (
-    <div className={styles.bar}>
-      <div role="status" className={styles.notices}>
-        {showNotices && notices.map((notice) => <p key={notice}>{notice}</p>)}
-      </div>
-      <div className={styles.barInner}>
-        <div className={styles.priceBlock}>
-          <span className={styles.totalLabel}>{text.summary.totalLabel}</span>
-          <span className={styles.total}>{formatPrice(price.total)}</span>
-          <span className={styles.days}>{text.summary.production(productionDays)}</span>
-        </div>
+    <PurchaseBar
+      priceLabel={text.summary.totalLabel}
+      price={formatPrice(price.total)}
+      detail={text.summary.production(productionDays)}
+      action={
         <Button
           size="lg"
           onClick={handleAdd}
           disabled={!canAdd}
           aria-describedby={canAdd ? undefined : 'cannot-add'}
-          className={styles.addButton}
         >
           {text.summary.addToCart}
         </Button>
-      </div>
-      <p role="status" className={styles.status}>
-        {justAdded && (
-          <>
-            {text.summary.added} <Link to={ROUTES.cart}>{text.summary.goToCart}</Link>
-          </>
-        )}
-      </p>
-      {!canAdd && (
-        <p id="cannot-add" className={styles.status}>
-          {text.summary.cannotAdd}
-        </p>
-      )}
-    </div>
+      }
+      top={
+        <div role="status" className={styles.notices}>
+          {showNotices && notices.map((notice) => <p key={notice}>{notice}</p>)}
+        </div>
+      }
+      bottom={
+        <>
+          <p role="status" className={styles.status}>
+            {justAdded && (
+              <>
+                {text.summary.added} <Link to={ROUTES.cart}>{text.summary.goToCart}</Link>
+              </>
+            )}
+          </p>
+          {!canAdd && (
+            <p id="cannot-add" className={styles.status}>
+              {text.summary.cannotAdd}
+            </p>
+          )}
+        </>
+      }
+    />
   );
 }
 

@@ -33,13 +33,13 @@ export function WhatsAppButton({ aboveBottomBar = false }: WhatsAppButtonProps) 
         <g className={styles.outline}>
           <circle cx="50" cy="50" r="40" />
           {SCALLOPS.map(({ cx, cy }) => (
-            <circle key={`o${cx}`} cx={cx} cy={cy} r="11.5" />
+            <circle key={`o${cx},${cy}`} cx={cx} cy={cy} r="11.5" />
           ))}
         </g>
         <g className={styles.scallop}>
           <circle cx="50" cy="50" r="38" />
           {SCALLOPS.map(({ cx, cy }) => (
-            <circle key={`s${cx}`} cx={cx} cy={cy} r="9.5" />
+            <circle key={`s${cx},${cy}`} cx={cx} cy={cy} r="9.5" />
           ))}
         </g>
         <circle className={styles.stitch} cx="50" cy="50" r="31" pathLength={100} />

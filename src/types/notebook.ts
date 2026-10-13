@@ -61,6 +61,8 @@ export interface ProductionConfig {
   baseDays: number;
   /** Días hábiles extra si lleva texto en la tapa. */
   personalizationExtraDays: number;
+  /** Máximo de cuadernos iguales a medida por pedido (capacidad de taller). */
+  maxUnitsPerDesign: number;
 }
 
 export interface PricingRules {
