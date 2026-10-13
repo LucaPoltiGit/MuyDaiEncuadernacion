@@ -2,9 +2,12 @@ import type { RouteObject } from 'react-router';
 import { StoreLayout } from './layouts/StoreLayout/StoreLayout';
 import { CartPage } from './pages/CartPage/CartPage';
 import { CatalogPage } from './pages/CatalogPage/CatalogPage';
+import { CheckoutPage } from './pages/CheckoutPage/CheckoutPage';
+import { CheckoutResultPage } from './pages/CheckoutResultPage/CheckoutResultPage';
 import { ComingSoonPage } from './pages/ComingSoonPage/ComingSoonPage';
 import { ConfiguratorPage } from './pages/ConfiguratorPage/ConfiguratorPage';
 import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage';
+import { PaymentSimulatorPage } from './pages/PaymentSimulatorPage/PaymentSimulatorPage';
 import { ProductPage } from './pages/ProductPage/ProductPage';
 import { RouteErrorPage } from './pages/RouteErrorPage/RouteErrorPage';
 import { StyleGuidePage } from './pages/StyleGuidePage/StyleGuidePage';
@@ -52,9 +55,10 @@ export const routes: RouteObject[] = [
       },
       {
         path: ROUTES.checkout,
-        element: <ComingSoonPage pageKey="checkout" />,
+        element: <CheckoutPage />,
         handle: { layout: { hideWhatsApp: true } } satisfies RouteHandle,
       },
+      { path: ROUTES.checkoutResult, element: <CheckoutResultPage /> },
       { path: ROUTES.login, element: <ComingSoonPage pageKey="login" /> },
       { path: ROUTES.register, element: <ComingSoonPage pageKey="register" /> },
       { path: ROUTES.terms, element: <ComingSoonPage pageKey="terms" /> },
@@ -69,6 +73,18 @@ export const routes: RouteObject[] = [
 
       { path: '*', element: <NotFoundPage /> },
     ],
+  },
+
+  // Pago de prueba: reemplaza a Mercado Pago (una página externa), sin el
+  // layout de la tienda.
+  {
+    path: ROUTES.paymentSimulator,
+    errorElement: <RouteErrorPage />,
+    element: (
+      <main>
+        <PaymentSimulatorPage />
+      </main>
+    ),
   },
 
   // Admin: va fuera del layout de la tienda (sin footer ni WhatsApp).

@@ -13,6 +13,8 @@ export const ROUTES = {
   faq: '/preguntas-frecuentes',
   cart: '/carrito',
   checkout: '/checkout',
+  paymentSimulator: '/checkout/pago-de-prueba',
+  checkoutResult: '/checkout/resultado',
   login: '/ingresar',
   register: '/crear-cuenta',
   account: '/mi-cuenta',
@@ -24,6 +26,17 @@ export const ROUTES = {
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;
+
+/** Query params de las rutas del pago (como los que usa Mercado Pago al volver). */
+export const PAYMENT_PARAMS = { preference: 'preferencia', order: 'pedido' } as const;
+
+export function paymentSimulatorPath(preferenceId: string) {
+  return `${ROUTES.paymentSimulator}?${PAYMENT_PARAMS.preference}=${encodeURIComponent(preferenceId)}`;
+}
+
+export function checkoutResultPath(orderId: string) {
+  return `${ROUTES.checkoutResult}?${PAYMENT_PARAMS.order}=${encodeURIComponent(orderId)}`;
+}
 
 export function productPath(slug: string) {
   return ROUTES.product.replace(':slug', slug);

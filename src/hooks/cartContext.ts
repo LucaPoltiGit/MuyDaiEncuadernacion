@@ -10,6 +10,8 @@ export interface CartContextValue {
   /** Agrega un cuaderno; devuelve `false` si ya estaba (no se repite). */
   addItem: (item: NewCartItem) => boolean;
   removeItem: (id: string) => void;
+  /** Vacía el carrito y saca el código (después de comprar). */
+  clear: () => void;
   /** Código de descuento aplicado (se revalida contra el carrito en cada cambio). */
   discountCode: string | null;
   setDiscountCode: (code: string | null) => void;

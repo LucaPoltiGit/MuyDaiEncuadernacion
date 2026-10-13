@@ -33,4 +33,10 @@ describe('Input', () => {
     expect(input).toHaveValue('MuyD');
     expect(screen.getByText('4/4')).toBeInTheDocument();
   });
+  it('con error, el mensaje de error reemplaza a la ayuda', () => {
+    render(<Input label="Email" hint="Te mandamos el comprobante acá" error="Falta el email" />);
+    const input = screen.getByLabelText('Email');
+    expect(input).toHaveAccessibleDescription('Falta el email');
+    expect(screen.queryByText('Te mandamos el comprobante acá')).not.toBeInTheDocument();
+  });
 });

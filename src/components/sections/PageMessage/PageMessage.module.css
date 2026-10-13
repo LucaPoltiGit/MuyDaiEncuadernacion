@@ -65,3 +65,28 @@
     font-size: var(--font-size-3xl);
   }
 }
+
+.extra {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+/* Festejo: título con las letras "wonky" de Fraunces y la mariposa volando
+   arriba a la izquierda, saliendo de la tarjeta. */
+.celebrate .title {
+  font-size: var(--font-size-3xl);
+  font-variation-settings: var(--font-variation-display-playful);
+}
+
+.celebrate .butterfly {
+  top: calc(var(--butterfly-size-lg) / -2);
+  bottom: auto;
+  left: calc(var(--butterfly-size-lg) / -4);
+  transform: rotate(-14deg);
+}
+
+.title:focus-visible {
+  outline-offset: var(--space-1);
+}

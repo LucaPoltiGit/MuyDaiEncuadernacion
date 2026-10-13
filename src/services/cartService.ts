@@ -58,3 +58,27 @@ export function saveDiscountCode(code: string | null) {
     // Sin almacenamiento, el código vale solo mientras dure la visita.
   }
 }
+
+const CHECKOUT_ORDER_KEY = 'muydai:checkout-order:v1';
+
+/**
+ * Pedido creado por el último checkout de este navegador. Sirve para vaciar
+ * el carrito solo al volver de pagar ESE pedido (no al abrir uno viejo) y
+ * para reemplazarlo si se vuelve a tocar "Pagar".
+ */
+export function loadCheckoutOrderId(): string | null {
+  try {
+    return window.localStorage.getItem(CHECKOUT_ORDER_KEY);
+  } catch {
+    return null;
+  }
+}
+
+export function saveCheckoutOrderId(orderId: string | null) {
+  try {
+    if (orderId) window.localStorage.setItem(CHECKOUT_ORDER_KEY, orderId);
+    else window.localStorage.removeItem(CHECKOUT_ORDER_KEY);
+  } catch {
+    // Sin almacenamiento: el carrito se vacía a mano.
+  }
+}

@@ -32,8 +32,10 @@ export function Input({
   const length = value !== undefined ? String(value).length : innerLength;
   const hasCounter = showCounter && maxLength !== undefined;
 
+  // Con error, el mensaje de error reemplaza a la ayuda: un solo texto chico.
+  const showHint = Boolean(hint) && !error;
   const describedBy =
-    [hint ? hintId : '', error ? errorId : '', hasCounter ? counterId : '']
+    [showHint ? hintId : '', error ? errorId : '', hasCounter ? counterId : '']
       .filter(Boolean)
       .join(' ') || undefined;
 
@@ -60,7 +62,7 @@ export function Input({
       />
       <div className={styles.footer}>
         <div className={styles.messages}>
-          {hint && (
+          {showHint && (
             <p id={hintId} className={styles.hint}>
               {hint}
             </p>
