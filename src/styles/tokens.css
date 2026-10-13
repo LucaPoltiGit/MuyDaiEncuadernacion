@@ -178,6 +178,8 @@
   --tap-target-min: 44px;
   --container-max: 72rem;
   --measure-narrow: 24rem;
+  /* Ancho de las tarjetas de ingreso y registro. */
+  --measure-form: 28rem;
   --measure-text: 40rem;
   --header-height: 4rem;
   --bottom-bar-height: 5.25rem;
@@ -198,6 +200,8 @@
   --cart-thumb-size-desktop: 9.5rem;
   /* Círculo con costura de los pasos numerados (checkout, "Qué sigue"). */
   --step-marker-size: 2.25rem;
+  /* Miniatura de cada cuaderno en Mis compras. */
+  --order-thumb-size: 4.5rem;
   /* Miniatura de cada cuaderno en el resumen del checkout. */
   --checkout-thumb-size: 3rem;
   /* Columna de precio fija desde tablet: así "Quitar" queda alineado en todas las filas. */

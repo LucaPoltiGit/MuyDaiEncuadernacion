@@ -63,7 +63,6 @@ describe('buildNewOrder', () => {
       quote: quoteShipping(interior, 34830),
       shipping,
       configurator,
-      userId: null,
     });
 
     expect(order.lines).toHaveLength(2);
@@ -87,7 +86,6 @@ describe('buildNewOrder', () => {
       quote: quotePickup(shipping.pickupPoints[0]),
       shipping,
       configurator,
-      userId: 'u1',
     });
     expect(order.delivery).toEqual({
       method: 'pickup',
@@ -112,7 +110,6 @@ describe('buildNewOrder', () => {
         quote: quoteShipping(caba, 0),
         shipping,
         configurator,
-        userId: null,
       }),
     ).toThrow();
   });

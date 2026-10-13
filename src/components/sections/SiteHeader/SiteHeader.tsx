@@ -8,6 +8,7 @@ import { Wordmark } from '../../ui/Wordmark/Wordmark';
 import { ROUTES } from '../../../constants/routes';
 import { content } from '../../../content';
 import { useScrollDirection } from '../../../hooks/useScrollDirection';
+import { useSession } from '../../../hooks/useSession';
 import styles from './SiteHeader.module.css';
 
 const text = content.layout;
@@ -58,6 +59,9 @@ export function SiteHeader({ cartCount, sticky = true }: SiteHeaderProps) {
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [isMenuOpen]);
 
+  const session = useSession();
+  const accountLabel =
+    session.status === 'ready' && session.user ? text.nav.account : text.nav.login;
   const cartLabel = cartCount === undefined ? text.cart.label : text.cart.withCount(cartCount);
 
   return (
@@ -104,7 +108,8 @@ export function SiteHeader({ cartCount, sticky = true }: SiteHeaderProps) {
             >
               {text.nav.configurator}
             </Link>
-            <Link to={ROUTES.account} className={styles.iconLink} aria-label={text.nav.account}>
+            {/* Sin sesión, Mi cuenta manda a ingresar y vuelve después. */}
+            <Link to={ROUTES.account} className={styles.iconLink} aria-label={accountLabel}>
               <Icon name="user" />
             </Link>
             <Link to={ROUTES.cart} className={styles.iconLink} aria-label={cartLabel}>
@@ -146,7 +151,7 @@ export function SiteHeader({ cartCount, sticky = true }: SiteHeaderProps) {
               <li>
                 <Link to={ROUTES.account} className={styles.menuSecondaryLink}>
                   <Icon name="user" />
-                  {text.nav.account}
+                  {accountLabel}
                 </Link>
               </li>
             </ul>

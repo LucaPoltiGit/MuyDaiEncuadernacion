@@ -2,17 +2,18 @@ import { describe, expect, it } from 'vitest';
 import {
   attachPaymentPreference,
   createOrder,
+  getMyOrders,
   getOrder,
   OrderConflictError,
   registerPaymentResult,
 } from './orderService';
 import { buildConfiguration } from '../domain/notebook/testFixture';
+import { login } from './authService';
 import { readDb } from './mockDb';
 import type { NewOrder } from '../types/order';
 
 function buildNewOrder(overrides: Partial<NewOrder> = {}): NewOrder {
   return {
-    userId: null,
     customer: { name: 'Ana', email: 'ana@example.com', phone: '1155551234' },
     lines: [
       {
@@ -110,5 +111,13 @@ describe('orderService', () => {
       payment: { status: 'approved', refundRequired: true },
     });
     expect(readDb().soldProductIds).toEqual([]);
+  });
+
+  it('el pedido queda a nombre de la sesión actual (no de lo que mande la pantalla)', async () => {
+    expect((await createOrder(buildNewOrder({ lines: [] }))).userId).toBeNull();
+    const user = await login('ana@example.com', 'cuadernos');
+    const mine = await createOrder(buildNewOrder({ lines: [] }));
+    expect(mine.userId).toBe(user.id);
+    expect((await getMyOrders()).map((order) => order.id)).toEqual([mine.id]);
   });
 });

@@ -1,14 +1,21 @@
 import type { RouteObject } from 'react-router';
+import { AccountLayout } from './layouts/AccountLayout/AccountLayout';
+import { RequireRole } from './layouts/RequireRole/RequireRole';
+import { StandaloneLayout } from './layouts/StandaloneLayout/StandaloneLayout';
 import { StoreLayout } from './layouts/StoreLayout/StoreLayout';
+import { AccountDesignsPage } from './pages/AccountDesignsPage/AccountDesignsPage';
+import { AccountOrdersPage } from './pages/AccountOrdersPage/AccountOrdersPage';
 import { CartPage } from './pages/CartPage/CartPage';
 import { CatalogPage } from './pages/CatalogPage/CatalogPage';
 import { CheckoutPage } from './pages/CheckoutPage/CheckoutPage';
 import { CheckoutResultPage } from './pages/CheckoutResultPage/CheckoutResultPage';
 import { ComingSoonPage } from './pages/ComingSoonPage/ComingSoonPage';
 import { ConfiguratorPage } from './pages/ConfiguratorPage/ConfiguratorPage';
+import { LoginPage } from './pages/LoginPage/LoginPage';
 import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage';
 import { PaymentSimulatorPage } from './pages/PaymentSimulatorPage/PaymentSimulatorPage';
 import { ProductPage } from './pages/ProductPage/ProductPage';
+import { RegisterPage } from './pages/RegisterPage/RegisterPage';
 import { RouteErrorPage } from './pages/RouteErrorPage/RouteErrorPage';
 import { StyleGuidePage } from './pages/StyleGuidePage/StyleGuidePage';
 import { ROUTES } from './constants/routes';
@@ -59,43 +66,52 @@ export const routes: RouteObject[] = [
         handle: { layout: { hideWhatsApp: true } } satisfies RouteHandle,
       },
       { path: ROUTES.checkoutResult, element: <CheckoutResultPage /> },
-      { path: ROUTES.login, element: <ComingSoonPage pageKey="login" /> },
-      { path: ROUTES.register, element: <ComingSoonPage pageKey="register" /> },
+      // Sin WhatsApp: en mobile tapaba los campos del formulario.
+      {
+        path: ROUTES.login,
+        element: <LoginPage />,
+        handle: { layout: { hideWhatsApp: true } } satisfies RouteHandle,
+      },
+      {
+        path: ROUTES.register,
+        element: <RegisterPage />,
+        handle: { layout: { hideWhatsApp: true } } satisfies RouteHandle,
+      },
       { path: ROUTES.terms, element: <ComingSoonPage pageKey="terms" /> },
       { path: ROUTES.shippingPolicy, element: <ComingSoonPage pageKey="shippingPolicy" /> },
       { path: ROUTES.withdrawal, element: <ComingSoonPage pageKey="withdrawal" /> },
       { path: ROUTES.styleGuide, element: <StyleGuidePage /> },
 
-      // Cuenta del cliente (Parte 6: guard de rol "cliente")
+      // Mi cuenta: solo con sesión iniciada.
       {
-        children: [{ path: ROUTES.account, element: <ComingSoonPage pageKey="account" /> }],
+        element: <RequireRole requiredRole="customer" />,
+        children: [
+          {
+            element: <AccountLayout />,
+            children: [
+              { path: ROUTES.account, element: <AccountOrdersPage /> },
+              { path: ROUTES.accountDesigns, element: <AccountDesignsPage /> },
+            ],
+          },
+        ],
       },
 
       { path: '*', element: <NotFoundPage /> },
     ],
   },
 
-  // Pago de prueba: reemplaza a Mercado Pago (una página externa), sin el
-  // layout de la tienda.
+  // Pantallas fuera de la tienda (sin header ni footer ni WhatsApp):
+  // - pago de prueba: reemplaza a Mercado Pago, una página externa;
+  // - admin: solo para el rol admin (Parte 7 suma su AdminLayout).
   {
-    path: ROUTES.paymentSimulator,
+    element: <StandaloneLayout />,
     errorElement: <RouteErrorPage />,
-    element: (
-      <main>
-        <PaymentSimulatorPage />
-      </main>
-    ),
-  },
-
-  // Admin: va fuera del layout de la tienda (sin footer ni WhatsApp).
-  // Parte 7: AdminLayout propio + guard de rol "admin".
-  {
-    path: ROUTES.admin,
-    errorElement: <RouteErrorPage />,
-    element: (
-      <main>
-        <ComingSoonPage pageKey="admin" />
-      </main>
-    ),
+    children: [
+      { path: ROUTES.paymentSimulator, element: <PaymentSimulatorPage /> },
+      {
+        element: <RequireRole requiredRole="admin" />,
+        children: [{ path: ROUTES.admin, element: <ComingSoonPage pageKey="admin" /> }],
+      },
+    ],
   },
 ];

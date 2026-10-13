@@ -62,7 +62,6 @@ interface BuildOrderInput {
   quote: ShippingQuote;
   shipping: ShippingConfig;
   configurator: ConfiguratorData;
-  userId: string | null;
 }
 
 /**
@@ -77,7 +76,6 @@ export function buildNewOrder({
   quote,
   shipping,
   configurator,
-  userId,
 }: BuildOrderInput): NewOrder {
   if (cart.hasProblems || cart.lines.length === 0) {
     throw new Error('El carrito tiene que estar listo para comprar (ver summarizeCart).');
@@ -101,7 +99,6 @@ export function buildNewOrder({
         };
 
   return {
-    userId,
     customer: { name: form.name.trim(), email: form.email.trim(), phone: form.phone.trim() },
     lines: cart.lines.map((line) => ({
       kind: line.item.kind,

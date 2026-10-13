@@ -1,0 +1,99 @@
+.count {
+  margin-bottom: var(--space-4);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: var(--cart-thumb-size) minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Mesa de trabajo con puntitos, como en la tienda y el configurador. */
+.figure {
+  align-self: start;
+  aspect-ratio: 1;
+  padding: var(--space-1);
+  border-radius: var(--radius-control);
+  background-color: var(--color-surface-muted);
+  background-image: radial-gradient(var(--color-border) var(--border-width-strong), transparent 0);
+  background-size: var(--space-3) var(--space-3);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.summary {
+  font-weight: var(--font-weight-medium);
+}
+
+.meta {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.price {
+  font-weight: var(--font-weight-bold);
+}
+
+.notice {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-control);
+  background-color: var(--color-warning-soft);
+  color: var(--color-warning);
+  font-size: var(--font-size-sm);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-2);
+}
+
+/* Confirmación de borrado: aviso en el tono de advertencia, no solo color. */
+.confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-control);
+  background-color: var(--color-warning-soft);
+}
+
+.confirmQuestion {
+  flex-basis: 100%;
+  color: var(--color-warning);
+  font-weight: var(--font-weight-bold);
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .card {
+    grid-template-columns: var(--cart-thumb-size-desktop) minmax(0, 1fr);
+  }
+}

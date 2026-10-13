@@ -6,13 +6,12 @@ import { LoadingState } from '../../components/ui/LoadingState/LoadingState';
 import { PAYMENT_PARAMS, ROUTES } from '../../constants/routes';
 import { content } from '../../content';
 import { usePaymentSimulator } from '../../hooks/usePaymentSimulator';
-import styles from './PaymentSimulatorPage.module.css';
 
 const text = content.checkout.simulator;
 
 /**
- * Hace las veces de Mercado Pago en modo prueba. Va fuera del layout de la
- * tienda, como una "pasarela" aparte pero de la misma familia visual.
+ * Hace las veces de Mercado Pago en modo prueba. Va en el layout de
+ * pantallas sueltas, como una "pasarela" aparte de la misma familia visual.
  */
 export function PaymentSimulatorPage() {
   const [params] = useSearchParams();
@@ -37,5 +36,5 @@ export function PaymentSimulatorPage() {
     return <PaymentSimulator order={state.data} onResolve={resolve} />;
   }
 
-  return <div className={styles.page}>{body()}</div>;
+  return body();
 }

@@ -18,6 +18,7 @@ export const ROUTES = {
   login: '/ingresar',
   register: '/crear-cuenta',
   account: '/mi-cuenta',
+  accountDesigns: '/mi-cuenta/disenos',
   admin: '/admin',
   terms: '/terminos-y-condiciones',
   shippingPolicy: '/envios',

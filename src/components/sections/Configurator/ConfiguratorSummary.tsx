@@ -11,6 +11,7 @@ import { configurationKey } from '../../../domain/notebook/restrictions';
 import { useCart } from '../../../hooks/useCart';
 import { useSaveDesign } from '../../../hooks/useSaveDesign';
 import type { ConfiguratorData, NotebookConfiguration } from '../../../types/notebook';
+import type { AuthLocationState } from '../../../types/route';
 import styles from './ConfiguratorSummary.module.css';
 
 const text = content.configurator;
@@ -165,6 +166,13 @@ export function ConfiguratorExtras({ data, configuration, price }: SummaryProps)
         {saveDesign.status === 'anonymous' && (
           <Link
             to={ROUTES.login}
+            // Al ingresar vuelve al configurador con este mismo diseño.
+            state={
+              {
+                from: ROUTES.configurator,
+                baseConfiguration: configuration,
+              } satisfies AuthLocationState
+            }
             className={buttonClassName({ variant: 'secondary', fullWidth: true })}
           >
             {text.saveDesign.loginPrompt}

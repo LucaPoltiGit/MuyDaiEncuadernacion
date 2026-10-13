@@ -1,4 +1,5 @@
 import { findShippingZone, normalizePostalCode } from '../shipping';
+import { isValidEmail, isValidPhone } from '../validation';
 import type { DeliveryMethod, ShippingConfig } from '../../types/shipping';
 
 /** Lo que completa la persona en el checkout. */
@@ -37,15 +38,6 @@ export function emptyCheckoutForm(): CheckoutForm {
   };
 }
 
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-/** Teléfono argentino: entre 8 y 13 dígitos, se aceptan +, espacios, guiones y paréntesis. */
-export function isValidPhone(phone: string) {
-  if (/[^\d\s()+-]/.test(phone)) return false;
-  const digits = phone.replace(/\D/g, '');
-  return digits.length >= 8 && digits.length <= 13;
-}
-
 /**
  * Valida el formulario completo. Solo pide los datos del método elegido
  * (dirección para envío, punto de retiro para retirar). Devuelve un objeto
@@ -59,7 +51,7 @@ export function validateCheckoutForm(form: CheckoutForm, shipping: ShippingConfi
 
   required('name');
   if (!form.email.trim()) errors.email = 'required';
-  else if (!EMAIL.test(form.email.trim())) errors.email = 'email';
+  else if (!isValidEmail(form.email)) errors.email = 'email';
   if (!form.phone.trim()) errors.phone = 'required';
   else if (!isValidPhone(form.phone)) errors.phone = 'phone';
 
