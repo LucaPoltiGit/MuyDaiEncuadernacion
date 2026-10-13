@@ -47,7 +47,7 @@ export function ConfiguratorBar({
   notices,
   noticeVersion,
 }: BarProps) {
-  const { addItem } = useCart();
+  const { addItem, contains } = useCart();
   const [addedKey, setAddedKey] = useState<string | null>(null);
   const [hiddenNoticeVersion, setHiddenNoticeVersion] = useState<number | null>(null);
   // El aviso de "agregado" se va solo si la persona cambia el diseño.
@@ -63,10 +63,14 @@ export function ConfiguratorBar({
     return () => window.clearTimeout(timer);
   }, [noticeVersion, notices.length]);
 
+  const newItem = { kind: 'custom' as const, configuration, priceAtAdd: price.total };
+  // Cada cuaderno es único: el mismo diseño no se agrega dos veces.
+  const inCart = contains(newItem);
+  const blocked = !canAdd || inCart;
+
   function handleAdd() {
-    if (!canAdd) return;
-    addItem({ kind: 'custom', configuration, priceAtAdd: price.total, quantity: 1 });
-    setAddedKey(configurationKey(configuration));
+    if (blocked) return;
+    if (addItem(newItem)) setAddedKey(configurationKey(configuration));
   }
 
   return (
@@ -78,8 +82,8 @@ export function ConfiguratorBar({
         <Button
           size="lg"
           onClick={handleAdd}
-          disabled={!canAdd}
-          aria-describedby={canAdd ? undefined : 'cannot-add'}
+          disabled={blocked}
+          aria-describedby={(!canAdd || !justAdded) && blocked ? 'cannot-add' : undefined}
         >
           {text.summary.addToCart}
         </Button>
@@ -101,6 +105,11 @@ export function ConfiguratorBar({
           {!canAdd && (
             <p id="cannot-add" className={styles.status}>
               {text.summary.cannotAdd}
+            </p>
+          )}
+          {canAdd && inCart && !justAdded && (
+            <p id="cannot-add" className={styles.status}>
+              {text.summary.alreadyInCart} <Link to={ROUTES.cart}>{text.summary.goToCart}</Link>
             </p>
           )}
         </>

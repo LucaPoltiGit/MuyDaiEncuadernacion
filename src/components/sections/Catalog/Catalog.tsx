@@ -20,7 +20,7 @@ export interface CatalogProps {
   data: ConfiguratorData;
 }
 
-/** Listado de cuadernos listos, con filtro por uso. Los agotados van al final. */
+/** Listado de cuadernos listos, con filtro por uso. Los vendidos van al final. */
 export function Catalog({ catalog, data }: CatalogProps) {
   const [category, setCategory] = useState(ALL_CATEGORIES);
   // Solo categorías con productos: un filtro vacío no ayuda.
@@ -29,7 +29,7 @@ export function Catalog({ catalog, data }: CatalogProps) {
   );
   const visible = catalog.products
     .filter((product) => category === ALL_CATEGORIES || product.categoryId === category)
-    .sort((a, b) => Number(a.stock <= 0) - Number(b.stock <= 0));
+    .sort((a, b) => Number(!a.available) - Number(!b.available));
 
   return (
     <div className={styles.catalog}>

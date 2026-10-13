@@ -6,7 +6,7 @@ import type { CartItem } from '../types/cart';
  * después se guarda en el backend, solo cambia este archivo. La clave lleva
  * versión: si cambia la forma de los datos, se sube y el carrito viejo se ignora.
  */
-const STORAGE_KEY = 'muydai:cart:v1';
+const STORAGE_KEY = 'muydai:cart:v2';
 
 function isCartItem(value: unknown): value is CartItem {
   if (typeof value !== 'object' || value === null) return false;
@@ -14,8 +14,6 @@ function isCartItem(value: unknown): value is CartItem {
   return (
     typeof item.id === 'string' &&
     (item.kind === 'custom' || (item.kind === 'product' && typeof item.productId === 'string')) &&
-    typeof item.quantity === 'number' &&
-    item.quantity > 0 &&
     typeof item.priceAtAdd === 'number' &&
     isNotebookConfiguration(item.configuration)
   );

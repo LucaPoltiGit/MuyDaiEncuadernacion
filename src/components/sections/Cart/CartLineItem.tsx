@@ -1,6 +1,5 @@
 import { Link } from 'react-router';
 import { Button } from '../../ui/Button/Button';
-import { Stepper } from '../../ui/Stepper/Stepper';
 import { NotebookFigure } from '../NotebookFigure/NotebookFigure';
 import { notebookSummary } from '../NotebookSpecs/notebookSummary';
 import { productPath } from '../../../constants/routes';
@@ -17,21 +16,17 @@ const text = content.cart;
 export interface CartLineItemProps {
   line: CartLine;
   data: ConfiguratorData;
-  onQuantityChange: (quantity: number) => void;
   onRemove: () => void;
 }
 
 function problemText(problem: CartLineProblem) {
-  if (problem.type === 'tooMany') return text.problems.tooMany(problem.max);
   return text.problems[problem.type];
 }
 
-/** Un renglón del carrito: dibujo, descripción, cantidad, precio y quitar. */
-export function CartLineItem({ line, data, onQuantityChange, onRemove }: CartLineItemProps) {
+/** Un renglón del carrito (un cuaderno único): dibujo, descripción, precio y quitar. */
+export function CartLineItem({ line, data, onRemove }: CartLineItemProps) {
   const { item, product, problem, configuration } = line;
   const name = product?.name ?? content.notebook.customName;
-  const canChangeQuantity =
-    problem === null || problem.type === 'tooMany' || problem.type === 'invalidConfiguration';
 
   return (
     <li className={[styles.line, problem ? styles.withProblem : ''].filter(Boolean).join(' ')}>
@@ -67,21 +62,6 @@ export function CartLineItem({ line, data, onQuantityChange, onRemove }: CartLin
         )}
 
         <div className={styles.controls}>
-          {canChangeQuantity && (
-            <Stepper
-              size="sm"
-              label={text.line.quantity}
-              value={item.quantity}
-              min={1}
-              // Si hay más de lo permitido, se puede bajar pero no subir.
-              max={Math.max(line.maxQuantity, item.quantity)}
-              step={1}
-              onChange={onQuantityChange}
-              formatValue={String}
-              decrementLabel={text.line.decrease(name)}
-              incrementLabel={text.line.increase(name)}
-            />
-          )}
           <Button variant="ghost" onClick={onRemove} aria-label={text.line.removeLabel(name)}>
             {text.line.remove}
           </Button>
@@ -93,14 +73,13 @@ export function CartLineItem({ line, data, onQuantityChange, onRemove }: CartLin
           {problem ? (
             // No suma al total hasta resolverlo: se tacha y se aclara.
             <>
-              <s>{formatPrice(line.unitPrice * item.quantity)}</s>
+              <s>{formatPrice(line.price)}</s>
               <span className={styles.excluded}>{text.line.excluded}</span>
             </>
           ) : (
-            formatPrice(line.unitPrice * item.quantity)
+            formatPrice(line.price)
           )}
         </p>
-        {item.quantity > 1 && <p className={styles.unit}>{text.line.unitPrice(line.unitPrice)}</p>}
       </div>
     </li>
   );

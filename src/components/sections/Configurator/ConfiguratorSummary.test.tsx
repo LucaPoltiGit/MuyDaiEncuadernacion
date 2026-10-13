@@ -3,8 +3,10 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { ConfiguratorBar, ConfiguratorExtras } from './ConfiguratorSummary';
 import { content } from '../../../content';
+import { buildCustomItem } from '../../../domain/cart/testFixture';
 import { calculatePrice } from '../../../domain/notebook/pricing';
 import { buildConfiguration, buildTestData } from '../../../domain/notebook/testFixture';
+import { saveCartItems } from '../../../services/cartService';
 import { renderWithRouter } from '../../../test/renderWithRouter';
 
 const text = content.configurator;
@@ -24,6 +26,21 @@ describe('ConfiguratorBar', () => {
     expect(screen.getByText(text.summary.production(9))).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: text.summary.addToCart }));
     expect(screen.getByText(text.summary.added)).toBeInTheDocument();
+  });
+
+  it('el mismo diseño no se agrega dos veces: cada cuaderno es único', async () => {
+    renderWithRouter(<ConfiguratorBar {...barProps} />);
+    const add = screen.getByRole('button', { name: text.summary.addToCart });
+    await userEvent.click(add);
+    expect(add).toBeDisabled();
+  });
+
+  it('si el diseño ya estaba en el carrito, lo avisa', () => {
+    saveCartItems([buildCustomItem({ configuration })]);
+    renderWithRouter(<ConfiguratorBar {...barProps} />);
+    const add = screen.getByRole('button', { name: text.summary.addToCart });
+    expect(add).toBeDisabled();
+    expect(add).toHaveAccessibleDescription(/ya está en tu carrito/);
   });
 
   it('no deja agregar una combinación inválida y explica por qué', () => {

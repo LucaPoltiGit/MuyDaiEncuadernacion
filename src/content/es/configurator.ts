@@ -81,6 +81,7 @@ export const configurator = {
     production: (days: number) => `Se entrega en ${days} días hábiles`,
     addToCart: 'Agregar al carrito',
     added: 'Listo, lo agregamos al carrito.',
+    alreadyInCart: 'Este diseño ya está en tu carrito. Cambiale algo para armar otro.',
     cannotAdd: 'Esta combinación no está disponible ahora. Probá con otra opción.',
     goToCart: 'Ver carrito',
     breakdownToggle: 'Ver detalle del precio',

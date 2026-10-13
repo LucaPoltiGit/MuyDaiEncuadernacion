@@ -6,8 +6,8 @@ export interface ProductCategory {
 }
 
 /**
- * Cuaderno de catálogo: una configuración ya armada, con precio y stock
- * propios (son cuadernos hechos, listos para enviar). El admin los edita.
+ * Cuaderno de catálogo: una pieza única ya hecha, lista para enviar (no hay
+ * dos iguales). Una configuración armada con precio propio. El admin los edita.
  */
 export interface Product {
   id: string;
@@ -19,10 +19,10 @@ export interface Product {
   description: string;
   categoryId: string;
   configuration: NotebookConfiguration;
-  /** Precio unitario en pesos, entero. */
+  /** Precio en pesos, entero. */
   price: number;
-  /** Unidades hechas y disponibles. 0 = sin stock. */
-  stock: number;
+  /** `false` cuando ya se vendió (queda visible como "Vendido"). */
+  available: boolean;
 }
 
 export interface CatalogData {
