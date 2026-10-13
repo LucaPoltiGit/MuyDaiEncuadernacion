@@ -19,6 +19,7 @@ export const ROUTES = {
   admin: '/admin',
   terms: '/terminos-y-condiciones',
   shippingPolicy: '/envios',
+  withdrawal: '/boton-de-arrepentimiento',
   styleGuide: '/guia-de-estilo',
 } as const;
 

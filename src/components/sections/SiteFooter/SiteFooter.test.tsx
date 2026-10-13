@@ -25,6 +25,14 @@ describe('SiteFooter', () => {
     );
   });
 
+  it('tiene el Botón de arrepentimiento (obligatorio para vender online)', () => {
+    renderWithRouter(<SiteFooter />);
+    expect(screen.getByRole('link', { name: text.withdrawal })).toHaveAttribute(
+      'href',
+      '/boton-de-arrepentimiento',
+    );
+  });
+
   it('invita a escribir por WhatsApp para pedidos especiales', () => {
     renderWithRouter(<SiteFooter />);
     expect(screen.getByRole('link', { name: text.contactButton })).toHaveAttribute(

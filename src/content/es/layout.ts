@@ -37,6 +37,7 @@ export const layout = {
     contactTitle: '¿Tenés una idea?',
     contactText: 'Si querés algo que no está en la tienda, escribime y lo charlamos.',
     contactButton: 'Escribime por WhatsApp',
+    withdrawal: 'Botón de arrepentimiento',
     consumerDefense: 'Defensa de las y los Consumidores',
     copyright: (year: number) => `© ${year} MuyDai. Hecho a mano en Argentina.`,
   },

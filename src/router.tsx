@@ -59,6 +59,7 @@ export const routes: RouteObject[] = [
       { path: ROUTES.register, element: <ComingSoonPage pageKey="register" /> },
       { path: ROUTES.terms, element: <ComingSoonPage pageKey="terms" /> },
       { path: ROUTES.shippingPolicy, element: <ComingSoonPage pageKey="shippingPolicy" /> },
+      { path: ROUTES.withdrawal, element: <ComingSoonPage pageKey="withdrawal" /> },
       { path: ROUTES.styleGuide, element: <StyleGuidePage /> },
 
       // Cuenta del cliente (Parte 6: guard de rol "cliente")

@@ -22,6 +22,7 @@ export const pages = {
       admin: 'Panel de administración',
       terms: 'Términos y condiciones',
       shippingPolicy: 'Envíos',
+      withdrawal: 'Botón de arrepentimiento',
       styleGuide: 'Guía de estilo',
     } satisfies Record<RouteKey, string>,
   },
