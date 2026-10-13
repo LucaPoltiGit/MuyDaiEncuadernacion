@@ -3,7 +3,6 @@ import { Badge } from '../../ui/Badge/Badge';
 import { WaveEdge } from '../../ui/WaveEdge/WaveEdge';
 import { NotebookFigure } from '../NotebookFigure/NotebookFigure';
 import { productPath } from '../../../constants/routes';
-import { LOW_STOCK_THRESHOLD } from '../../../constants/shop';
 import { content } from '../../../content';
 import { formatPrice } from '../../../domain/money';
 import type { Product } from '../../../types/catalog';
@@ -22,8 +21,7 @@ export interface ProductCardProps {
 
 /** Tarjeta de un cuaderno de catálogo. Toda la tarjeta lleva a la ficha. */
 export function ProductCard({ product, data, headingLevel: Heading = 'h2' }: ProductCardProps) {
-  const soldOut = product.stock <= 0;
-  const lowStock = !soldOut && product.stock <= LOW_STOCK_THRESHOLD;
+  const soldOut = !product.available;
 
   return (
     <article className={[styles.card, soldOut ? styles.soldOut : ''].filter(Boolean).join(' ')}>
@@ -41,8 +39,8 @@ export function ProductCard({ product, data, headingLevel: Heading = 'h2' }: Pro
         <p className={styles.tagline}>{product.tagline}</p>
         <div className={styles.footer}>
           <p className={styles.price}>{formatPrice(product.price)}</p>
-          {soldOut && <Badge>{text.outOfStock}</Badge>}
-          {lowStock && <Badge tone="accent">{text.lowStock(product.stock)}</Badge>}
+          {/* Todos son piezas únicas (lo dice la tienda arriba): solo se marca el vendido. */}
+          {soldOut && <Badge>{text.sold}</Badge>}
         </div>
       </div>
     </article>

@@ -6,11 +6,9 @@ import { buttonClassName } from '../../ui/Button/buttonClassName';
 import { Butterfly } from '../../ui/Butterfly/Butterfly';
 import { Flower } from '../../ui/Flower/Flower';
 import { PurchaseBar } from '../../ui/PurchaseBar/PurchaseBar';
-import { Stepper } from '../../ui/Stepper/Stepper';
 import { NotebookFigure } from '../NotebookFigure/NotebookFigure';
 import { NotebookSpecs } from '../NotebookSpecs/NotebookSpecs';
 import { ROUTES } from '../../../constants/routes';
-import { LOW_STOCK_THRESHOLD } from '../../../constants/shop';
 import { content } from '../../../content';
 import { formatPrice } from '../../../domain/money';
 import { useCart } from '../../../hooks/useCart';
@@ -28,39 +26,25 @@ export interface ProductDetailProps {
   data: ConfiguratorData;
 }
 
-/** Ficha de un cuaderno de catálogo: dibujo, precio, cantidad y detalle. */
+/** Ficha de un cuaderno de la tienda (pieza única): dibujo, precio y detalle. */
 export function ProductDetail({ product, categoryName, data }: ProductDetailProps) {
-  const { items, addItem } = useCart();
-  const [quantity, setQuantity] = useState(1);
+  const { addItem, contains } = useCart();
   const [justAdded, setJustAdded] = useState(false);
 
-  const inCart = items
-    .filter((item) => item.kind === 'product' && item.productId === product.id)
-    .reduce((sum, item) => sum + item.quantity, 0);
-  const soldOut = product.stock <= 0;
-  const available = Math.max(0, product.stock - inCart);
-  const safeQuantity = Math.min(quantity, Math.max(1, available));
+  const newItem = {
+    kind: 'product' as const,
+    productId: product.id,
+    configuration: product.configuration,
+    priceAtAdd: product.price,
+  };
+  const sold = !product.available;
+  const inCart = contains(newItem);
   const customizeState: ConfiguratorLocationState = {
     baseConfiguration: product.configuration,
   };
 
   function handleAdd() {
-    if (available <= 0) return;
-    addItem({
-      kind: 'product',
-      productId: product.id,
-      configuration: product.configuration,
-      priceAtAdd: product.price,
-      quantity: safeQuantity,
-    });
-    setQuantity(1);
-    setJustAdded(true);
-  }
-
-  function stockText() {
-    if (soldOut) return text.outOfStock;
-    if (available <= 0) return text.quantity.allInCart;
-    return text.stock(product.stock);
+    if (addItem(newItem)) setJustAdded(true);
   }
 
   return (
@@ -95,44 +79,22 @@ export function ProductDetail({ product, categoryName, data }: ProductDetailProp
           </header>
 
           <p className={styles.stock}>
-            {soldOut ? (
-              <Badge>{stockText()}</Badge>
+            {sold ? (
+              <Badge>{text.sold}</Badge>
             ) : (
-              <Badge tone={product.stock <= LOW_STOCK_THRESHOLD ? 'accent' : 'brand'} withDot>
-                {stockText()}
+              <Badge tone="brand" withDot>
+                {text.unique}
               </Badge>
             )}
           </p>
-
-          {available > 0 && (
-            <Stepper
-              label={text.quantity.label}
-              value={safeQuantity}
-              min={1}
-              max={available}
-              step={1}
-              onChange={(value) => {
-                setQuantity(value);
-                setJustAdded(false);
-              }}
-              formatValue={text.quantity.unit}
-              decrementLabel={text.quantity.decrease}
-              incrementLabel={text.quantity.increase}
-              hint={
-                inCart > 0
-                  ? `${text.quantity.alreadyInCart(inCart)} ${text.quantity.hint(available)}`
-                  : text.quantity.hint(available)
-              }
-            />
-          )}
 
           <div className={styles.purchase}>
             <PurchaseBar
               priceLabel={text.priceLabel}
               price={formatPrice(product.price)}
-              detail={soldOut ? text.outOfStockHint : text.readyToShip}
+              detail={sold ? text.soldHint : text.readyToShip}
               action={
-                soldOut ? (
+                sold ? (
                   <Link
                     to={ROUTES.configurator}
                     state={customizeState}
@@ -141,7 +103,12 @@ export function ProductDetail({ product, categoryName, data }: ProductDetailProp
                     {text.orderCustom}
                   </Link>
                 ) : (
-                  <Button size="lg" onClick={handleAdd} disabled={available <= 0}>
+                  <Button
+                    size="lg"
+                    onClick={handleAdd}
+                    disabled={inCart}
+                    aria-describedby={inCart && !justAdded ? 'product-in-cart' : undefined}
+                  >
                     {text.addToCart}
                   </Button>
                 )
@@ -152,6 +119,11 @@ export function ProductDetail({ product, categoryName, data }: ProductDetailProp
                     <>
                       {text.added} <Link to={ROUTES.cart}>{text.goToCart}</Link>
                     </>
+                  )}
+                  {inCart && !justAdded && (
+                    <span id="product-in-cart">
+                      {text.alreadyInCart} <Link to={ROUTES.cart}>{text.goToCart}</Link>
+                    </span>
                   )}
                 </p>
               }
@@ -167,7 +139,7 @@ export function ProductDetail({ product, categoryName, data }: ProductDetailProp
             <NotebookSpecs configuration={product.configuration} data={data} />
           </section>
 
-          {!soldOut && (
+          {!sold && (
             <aside className={styles.customize} aria-labelledby="product-customize">
               <h2 id="product-customize" className={styles.sectionTitle}>
                 {text.customize.title}

@@ -11,13 +11,13 @@ const text = content.product;
 const data = buildTestData();
 
 describe('ProductDetail', () => {
-  it('muestra el cuaderno con su precio, stock y características', () => {
+  it('muestra el cuaderno con su precio, que es único y cómo es', () => {
     renderWithRouter(
       <ProductDetail product={buildProduct()} categoryName="Para escribir" data={data} />,
     );
     expect(screen.getByRole('heading', { level: 1, name: 'Cuaderno Flores' })).toBeInTheDocument();
     expect(screen.getByText(/20\.000/)).toBeInTheDocument();
-    expect(screen.getByText(text.stock(3))).toBeInTheDocument();
+    expect(screen.getByText(text.unique)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: text.specsTitle })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: content.catalog.eyebrow })).toHaveAttribute(
       'href',
@@ -25,21 +25,19 @@ describe('ProductDetail', () => {
     );
   });
 
-  it('agrega la cantidad elegida, sin pasarse del stock', async () => {
-    renderWithRouter(<ProductDetail product={buildProduct({ stock: 2 })} data={data} />);
-    const increase = screen.getByRole('button', { name: text.quantity.increase });
-    await userEvent.click(increase);
-    expect(increase).toBeDisabled();
+  it('se agrega una sola vez: es una pieza única', async () => {
+    renderWithRouter(<ProductDetail product={buildProduct()} data={data} />);
+    expect(screen.queryByRole('group', { name: /cantidad/i })).not.toBeInTheDocument();
 
-    await userEvent.click(screen.getByRole('button', { name: text.addToCart }));
+    const add = screen.getByRole('button', { name: text.addToCart });
+    await userEvent.click(add);
     expect(screen.getByText(text.added)).toBeInTheDocument();
-    // Ya están los 2 en el carrito: no deja agregar más.
-    expect(screen.getByText(text.quantity.allInCart)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: text.addToCart })).toBeDisabled();
+    expect(add).toBeDisabled();
   });
 
-  it('sin stock, ofrece pedirlo a medida', () => {
-    renderWithRouter(<ProductDetail product={buildProduct({ stock: 0 })} data={data} />);
+  it('si ya se vendió, ofrece pedir uno parecido a medida', () => {
+    renderWithRouter(<ProductDetail product={buildProduct({ available: false })} data={data} />);
+    expect(screen.getByText(text.sold)).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: text.addToCart })).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: text.orderCustom })).toHaveAttribute(
       'href',

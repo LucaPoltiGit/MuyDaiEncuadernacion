@@ -7,8 +7,8 @@ import { buildTestData } from '../notebook/testFixture';
 const context = { configurator: buildTestData(), products: [buildProduct()] };
 const now = new Date('2026-10-12T12:00:00.000Z');
 
-/** Carrito con $40.000 de catálogo y $16.200 a medida. */
-const mixedCart = summarizeCart([buildProductItem({ quantity: 2 }), buildCustomItem()], context);
+/** Carrito con $20.000 de la tienda y $16.200 a medida. */
+const mixedCart = summarizeCart([buildProductItem(), buildCustomItem()], context);
 const productOnlyCart = summarizeCart([buildProductItem()], context);
 
 describe('normalizeDiscountCode', () => {
@@ -20,8 +20,8 @@ describe('normalizeDiscountCode', () => {
 describe('evaluateDiscount', () => {
   it('aplica un porcentaje sobre el subtotal, redondeado a pesos', () => {
     const result = evaluateDiscount(buildDiscount({ value: 15 }), mixedCart, now);
-    // 15% de $56.200 = $8.430
-    expect(result).toMatchObject({ status: 'applied', amount: 8430 });
+    // 15% de $36.200 = $5.430
+    expect(result).toMatchObject({ status: 'applied', amount: 5430 });
   });
 
   it('redondea los porcentajes que dan centavos', () => {
@@ -54,7 +54,7 @@ describe('evaluateDiscount', () => {
 
   it('si aplica solo a cuadernos a medida, descuenta solo sobre esa parte', () => {
     const result = evaluateDiscount(buildDiscount({ appliesTo: 'custom' }), mixedCart, now);
-    // 10% de $16.200 (no de $56.200)
+    // 10% de $16.200 (no de $36.200)
     expect(result).toMatchObject({ status: 'applied', amount: 1620 });
   });
 
@@ -80,7 +80,7 @@ describe('evaluateDiscount', () => {
   });
 
   it('el mínimo se mide sobre la parte alcanzada por el código', () => {
-    // Total $56.200, pero lo hecho a medida suma $16.200: no llega a $20.000.
+    // Total $36.200, pero lo hecho a medida suma $16.200: no llega a $20.000.
     const result = evaluateDiscount(
       buildDiscount({ appliesTo: 'custom', minSubtotal: 20000 }),
       mixedCart,

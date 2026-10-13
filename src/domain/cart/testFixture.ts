@@ -14,7 +14,7 @@ export function buildProduct(overrides: Partial<Product> = {}): Product {
     categoryId: 'escribir',
     configuration: buildConfiguration(),
     price: 20000,
-    stock: 3,
+    available: true,
     ...overrides,
   };
 }
@@ -25,7 +25,6 @@ export function buildProductItem(overrides: Partial<ProductCartItem> = {}): Prod
     kind: 'product',
     productId: 'p-flores',
     configuration: buildConfiguration(),
-    quantity: 1,
     priceAtAdd: 20000,
     addedAt: '2026-10-01T12:00:00.000Z',
     ...overrides,
@@ -38,7 +37,6 @@ export function buildCustomItem(overrides: Partial<CustomCartItem> = {}): Custom
     id: 'item-custom',
     kind: 'custom',
     configuration: buildConfiguration(),
-    quantity: 1,
     priceAtAdd: 16200,
     addedAt: '2026-10-01T12:00:00.000Z',
     ...overrides,

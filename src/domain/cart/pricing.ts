@@ -2,17 +2,18 @@ import type { CartItem } from '../../types/cart';
 import type { Product } from '../../types/catalog';
 import type { ConfiguratorData, NotebookConfiguration } from '../../types/notebook';
 import { calculatePrice } from '../notebook/pricing';
-import { isValidConfiguration } from '../notebook/restrictions';
+import { configurationKey, isValidConfiguration } from '../notebook/restrictions';
 
 /** Algo que impide comprar un renglón tal cual está (el texto lo arma la UI). */
 export type CartLineProblem =
   /** El producto ya no está en el catálogo. */
   | { type: 'productRemoved' }
-  | { type: 'outOfStock' }
-  /** Se pidieron más unidades de las que hay (o de las que el taller hace por pedido). */
-  | { type: 'tooMany'; max: number }
+  /** Era una pieza única y ya se vendió. */
+  | { type: 'sold' }
   /** Un cuaderno a medida usa opciones que se agotaron o cambiaron. */
-  | { type: 'invalidConfiguration' };
+  | { type: 'invalidConfiguration' }
+  /** El mismo cuaderno ya está en otro renglón (cada uno es único). */
+  | { type: 'duplicate' };
 
 export interface CartLine {
   item: CartItem;
@@ -22,11 +23,8 @@ export interface CartLine {
    * la del ítem.
    */
   configuration: NotebookConfiguration;
-  /** Precio unitario vigente. */
-  unitPrice: number;
-  subtotal: number;
-  /** Máximo de unidades que se pueden pedir de este renglón. */
-  maxQuantity: number;
+  /** Precio vigente. */
+  price: number;
   /** Producto de catálogo de origen (si es de catálogo y sigue existiendo). */
   product?: Product;
   problem: CartLineProblem | null;
@@ -54,80 +52,71 @@ function hasPriceChanged(current: number, atAdd: number) {
   return atAdd > 0 && current !== atAdd;
 }
 
-function priceLine(
-  item: CartItem,
-  { configurator, products }: CartPricingContext,
-  /** Unidades de este mismo producto en otros renglones (el stock es por producto). */
-  otherUnits: number,
-): CartLine {
+/**
+ * Qué identifica a un cuaderno como "el mismo": el producto (pieza única)
+ * o, si es a medida, su diseño. Lo usa el carrito para no repetirlos.
+ */
+export function cartItemIdentity(
+  item: Pick<CartItem, 'kind' | 'configuration'> & { productId?: string },
+) {
+  return item.kind === 'product'
+    ? `product:${item.productId}`
+    : `custom:${configurationKey(item.configuration)}`;
+}
+
+function priceLine(item: CartItem, { configurator, products }: CartPricingContext): CartLine {
   if (item.kind === 'product') {
     const product = products.find((candidate) => candidate.id === item.productId);
     if (!product) {
       return {
         item,
         configuration: item.configuration,
-        unitPrice: item.priceAtAdd,
-        subtotal: 0,
-        maxQuantity: 0,
+        price: item.priceAtAdd,
         problem: { type: 'productRemoved' },
         priceChanged: false,
       };
     }
-    const max = Math.max(0, product.stock - otherUnits);
-    const problem: CartLineProblem | null =
-      product.stock <= 0
-        ? { type: 'outOfStock' }
-        : item.quantity > max
-          ? { type: 'tooMany', max }
-          : null;
     return {
       item,
       product,
       configuration: product.configuration,
-      unitPrice: product.price,
-      subtotal: product.price * item.quantity,
-      maxQuantity: max,
-      problem,
+      price: product.price,
+      problem: product.available ? null : { type: 'sold' },
       priceChanged: hasPriceChanged(product.price, item.priceAtAdd),
     };
   }
 
-  const unitPrice = calculatePrice(item.configuration, configurator).total;
-  const max = configurator.production.maxUnitsPerDesign;
-  const problem: CartLineProblem | null = !isValidConfiguration(configurator, item.configuration)
-    ? { type: 'invalidConfiguration' }
-    : item.quantity > max
-      ? { type: 'tooMany', max }
-      : null;
+  const price = calculatePrice(item.configuration, configurator).total;
   return {
     item,
     configuration: item.configuration,
-    unitPrice,
-    subtotal: unitPrice * item.quantity,
-    maxQuantity: max,
-    problem,
-    priceChanged: hasPriceChanged(unitPrice, item.priceAtAdd),
+    price,
+    problem: isValidConfiguration(configurator, item.configuration)
+      ? null
+      : { type: 'invalidConfiguration' },
+    priceChanged: hasPriceChanged(price, item.priceAtAdd),
   };
 }
 
 /**
- * Precio del carrito con las reglas y el stock vigentes (nunca con el
- * precio guardado al agregar). Los renglones con problemas no suman al
+ * Precio del carrito con las reglas y la disponibilidad vigentes (nunca con
+ * el precio guardado al agregar). Los renglones con problemas no suman al
  * subtotal y bloquean el checkout hasta que se corrijan o se quiten.
  */
 export function summarizeCart(items: CartItem[], context: CartPricingContext): CartSummary {
-  // Unidades pedidas antes de cada renglón, por producto: si un mismo
-  // producto quedó en dos renglones, el stock se reparte entre ambos.
-  const unitsBefore = new Map<string, number>();
+  const seen = new Set<string>();
   const lines = items.map((item) => {
-    if (item.kind !== 'product') return priceLine(item, context, 0);
-    const before = unitsBefore.get(item.productId) ?? 0;
-    unitsBefore.set(item.productId, before + item.quantity);
-    return priceLine(item, context, before);
+    const line = priceLine(item, context);
+    // Un carrito viejo (o editado a mano) podría repetir un cuaderno único.
+    const identity = cartItemIdentity(item);
+    if (seen.has(identity) && !line.problem)
+      return { ...line, problem: { type: 'duplicate' } as const };
+    seen.add(identity);
+    return line;
   });
   const subtotalByKind = { custom: 0, product: 0 };
   for (const line of lines) {
-    if (!line.problem) subtotalByKind[line.item.kind] += line.subtotal;
+    if (!line.problem) subtotalByKind[line.item.kind] += line.price;
   }
   return {
     lines,

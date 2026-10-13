@@ -67,7 +67,7 @@ export const configuratorMock: ConfiguratorData = {
   ],
   sheets: { min: 40, step: 20, default: 80 },
   personalization: { enabled: true, maxLength: 12 },
-  production: { baseDays: 7, personalizationExtraDays: 2, maxUnitsPerDesign: 5 },
+  production: { baseDays: 7, personalizationExtraDays: 2 },
   pricing: {
     basePriceBySize: { a6: 9000, a5: 12500, a4: 17500 },
     sheetPriceBySize: { a6: 25, a5: 40, a4: 70 },

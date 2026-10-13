@@ -1,8 +1,8 @@
 import type { CatalogData } from '../../types/catalog';
 
 /**
- * Cuadernos hechos, listos para enviar. Cada uno es una configuración del
- * configurador con precio y stock propios. Precios en pesos, enteros.
+ * Cuadernos hechos, listos para enviar. Cada uno es una pieza única: una
+ * configuración del configurador con precio propio. Precios en pesos, enteros.
  */
 export const catalogMock: CatalogData = {
   categories: [
@@ -28,7 +28,7 @@ export const catalogMock: CatalogData = {
         coverText: '',
       },
       price: 19900,
-      stock: 4,
+      available: true,
     },
     {
       id: 'p-acuarela',
@@ -47,7 +47,7 @@ export const catalogMock: CatalogData = {
         coverText: '',
       },
       price: 24500,
-      stock: 2,
+      available: true,
     },
     {
       id: 'p-bolsillo',
@@ -66,7 +66,7 @@ export const catalogMock: CatalogData = {
         coverText: '',
       },
       price: 12900,
-      stock: 8,
+      available: true,
     },
     {
       id: 'p-recetario',
@@ -85,7 +85,7 @@ export const catalogMock: CatalogData = {
         coverText: 'Recetas',
       },
       price: 29900,
-      stock: 1,
+      available: true,
     },
     {
       id: 'p-ondas',
@@ -104,7 +104,7 @@ export const catalogMock: CatalogData = {
         coverText: '',
       },
       price: 18900,
-      stock: 0,
+      available: false,
     },
     {
       id: 'p-viaje',
@@ -123,7 +123,7 @@ export const catalogMock: CatalogData = {
         coverText: '',
       },
       price: 14500,
-      stock: 5,
+      available: true,
     },
     {
       id: 'p-croquera',
@@ -142,7 +142,7 @@ export const catalogMock: CatalogData = {
         coverText: '',
       },
       price: 26900,
-      stock: 3,
+      available: true,
     },
     {
       id: 'p-agenda',
@@ -161,7 +161,7 @@ export const catalogMock: CatalogData = {
         coverText: '2027',
       },
       price: 27500,
-      stock: 6,
+      available: true,
     },
   ],
 };

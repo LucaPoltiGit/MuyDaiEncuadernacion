@@ -1,12 +1,15 @@
 import type { NotebookConfiguration } from './notebook';
 
+/**
+ * Cada cuaderno es único: un renglón del carrito es siempre un cuaderno
+ * (no hay cantidades).
+ */
 interface CartItemBase {
   id: string;
   /** Todo cuaderno es una configuración (los de catálogo, una ya armada). */
   configuration: NotebookConfiguration;
-  quantity: number;
   /**
-   * Precio unitario cuando se agregó: solo referencia. El carrito y el
+   * Precio cuando se agregó: solo referencia. El carrito y el
    * checkout recalculan con `calculatePrice` y las reglas vigentes.
    */
   priceAtAdd: number;

@@ -21,7 +21,7 @@ export interface CartViewProps {
 
 /** Carrito: renglones editables y resumen con descuento. Precios siempre vigentes. */
 export function CartView({ shop }: CartViewProps) {
-  const { items, count, updateQuantity, removeItem } = useCart();
+  const { items, count, removeItem } = useCart();
   const cart = useMemo(
     () =>
       summarizeCart(items, { configurator: shop.configurator, products: shop.catalog.products }),
@@ -66,7 +66,6 @@ export function CartView({ shop }: CartViewProps) {
                 key={line.item.id}
                 line={line}
                 data={shop.configurator}
-                onQuantityChange={(quantity) => updateQuantity(line.item.id, quantity)}
                 onRemove={() => removeItem(line.item.id)}
               />
             ))}

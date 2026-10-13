@@ -53,7 +53,7 @@ export function buildTestData(overrides: Partial<ConfiguratorData> = {}): Config
     ],
     sheets: { min: 40, step: 20, default: 80 },
     personalization: { enabled: true, maxLength: 12 },
-    production: { baseDays: 7, personalizationExtraDays: 2, maxUnitsPerDesign: 5 },
+    production: { baseDays: 7, personalizationExtraDays: 2 },
     pricing: {
       basePriceBySize: { a6: 8000, a5: 10000, a4: 15000, a3: 20000 },
       sheetPriceBySize: { a6: 20, a5: 40, a4: 70, a3: 100 },

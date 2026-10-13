@@ -15,7 +15,7 @@ const catalog = {
     { id: 'vacia', name: 'Sin productos' },
   ],
   products: [
-    buildProduct({ id: '1', slug: 'agotado', name: 'Agotado', stock: 0 }),
+    buildProduct({ id: '1', slug: 'vendido', name: 'Vendido', available: false }),
     buildProduct({ id: '2', slug: 'diario', name: 'Diario' }),
     buildProduct({ id: '3', slug: 'croquera', name: 'Croquera', categoryId: 'dibujar' }),
   ],
@@ -28,10 +28,10 @@ function productNames() {
 }
 
 describe('Catalog', () => {
-  it('lista los cuadernos con los agotados al final', () => {
+  it('lista los cuadernos con los vendidos al final', () => {
     renderWithRouter(<Catalog catalog={catalog} data={buildTestData()} />);
     expect(screen.getByRole('heading', { level: 1, name: text.title })).toBeInTheDocument();
-    expect(productNames()).toEqual(['Diario', 'Croquera', 'Agotado']);
+    expect(productNames()).toEqual(['Diario', 'Croquera', 'Vendido']);
     expect(screen.getByText(text.count(3))).toBeInTheDocument();
   });
 

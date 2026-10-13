@@ -53,7 +53,7 @@ describe('CartView', () => {
   });
 
   it('muestra cada cuaderno y el total con precios vigentes', () => {
-    // Catálogo $20.000 + a medida $16.200
+    // Tienda $20.000 + a medida $16.200
     renderCart([buildProductItem(), buildCustomItem()]);
     expect(screen.getByRole('heading', { name: 'Cuaderno Flores' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: content.notebook.customName })).toBeInTheDocument();
@@ -62,16 +62,6 @@ describe('CartView', () => {
       'href',
       '/checkout',
     );
-  });
-
-  it('cambiar la cantidad actualiza el total, hasta el stock disponible', async () => {
-    renderCart([buildProductItem()]);
-    const increase = screen.getByRole('button', { name: text.line.increase('Cuaderno Flores') });
-    await userEvent.click(increase);
-    await userEvent.click(increase);
-    expect(totalRow()).toHaveTextContent(/60\.000/);
-    // Stock 3: no deja sumar más.
-    expect(increase).toBeDisabled();
   });
 
   it('quitar el último cuaderno deja el carrito vacío', async () => {
@@ -136,14 +126,14 @@ describe('CartView', () => {
 
   it('si al cambiar el carrito el código deja de cumplir el mínimo, avisa cuánto falta', async () => {
     mockedFind.mockResolvedValue(buildDiscount({ code: 'MIN30', minSubtotal: 30000 }));
-    renderCart([buildProductItem({ quantity: 2 })]);
+    renderCart([buildProductItem(), buildCustomItem()]);
 
     await userEvent.type(screen.getByLabelText(text.discount.label), 'MIN30');
     await userEvent.click(screen.getByRole('button', { name: text.discount.apply }));
     expect(await summary().findByText(text.summary.discount('MIN30'))).toBeInTheDocument();
 
     await userEvent.click(
-      screen.getByRole('button', { name: text.line.decrease('Cuaderno Flores') }),
+      screen.getByRole('button', { name: text.line.removeLabel(content.notebook.customName) }),
     );
     expect(
       // formatPrice usa espacio duro; Testing Library normaliza los espacios del DOM.

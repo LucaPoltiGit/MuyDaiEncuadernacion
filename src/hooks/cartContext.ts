@@ -3,11 +3,12 @@ import type { CartItem, NewCartItem } from '../types/cart';
 
 export interface CartContextValue {
   items: CartItem[];
-  /** Cantidad total de cuadernos (sumando cantidades). */
+  /** Cantidad de cuadernos (cada uno es único: uno por renglón). */
   count: number;
-  addItem: (item: NewCartItem) => void;
-  /** Cambia la cantidad de un renglón (mínimo 1; para sacarlo, `removeItem`). */
-  updateQuantity: (id: string, quantity: number) => void;
+  /** Si ese cuaderno (producto o diseño) ya está en el carrito. */
+  contains: (item: NewCartItem) => boolean;
+  /** Agrega un cuaderno; devuelve `false` si ya estaba (no se repite). */
+  addItem: (item: NewCartItem) => boolean;
   removeItem: (id: string) => void;
   /** Código de descuento aplicado (se revalida contra el carrito en cada cambio). */
   discountCode: string | null;
